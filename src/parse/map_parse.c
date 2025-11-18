@@ -1,4 +1,4 @@
-#include "../inc/cub3d.h"
+#include "../cub3d.h"
 
 static int	check_after_map(int fd)
 {
@@ -36,17 +36,18 @@ static void	norm_to_grid(char **lines, int h, t_map *map)
 		if (len > wmax)
 			wmax = len;
 	}
-	map->grid = malloc(sizeof(char*) * h);
+	map->grid = malloc(sizeof(char *) * h);
+	map->w = wmax;
+	map->h = h;
 	i = -1;
 	while (++i < h)
 	{
+		len = (int)ft_strlen(lines[i]);
 		map->grid[i] = malloc(wmax + 1);
 		ft_memset(map->grid[i], ' ', wmax);
+		ft_memcpy(map->grid[i], lines[i], len);
 		map->grid[i][wmax] = '\0';
-		ft_strlcpy(map->grid[i], lines[i], (size_t)(wmax + 1));
 	}
-	map->w = wmax;
-	map->h = h;
 }
 
 int set_map_parse(t_cub *cub, int fd)
@@ -63,7 +64,7 @@ int set_map_parse(t_cub *cub, int fd)
 	if (validate_chars_and_player(&cub->map, &cub->player)
 			|| check_closed_by_walls(&cub->map) || check_after_map(fd))
 	{
-		free_map(&cub->map);
+		//free_map(&cub->map);
 		return (1);
 	}
 	return (0);

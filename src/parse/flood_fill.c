@@ -1,4 +1,4 @@
-#include "../inc/cub3d.h"
+#include "../cub3d.h"
 
 static char	**two_expanded_grid(t_map *map)
 {

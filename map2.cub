@@ -1,0 +1,11 @@
+NO ./assets/test1.txt
+SO ./assets/test2.txt
+WE ./assets/test3.txt
+EA ./assets/test4.txt
+
+F 220,100,0
+C 225,30,0
+
+111111
+100N01
+1111111

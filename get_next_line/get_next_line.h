@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omerfarukonal <omerfarukonal@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:54:14 by oonal             #+#    #+#             */
-/*   Updated: 2024/12/28 14:54:16 by oonal            ###   ########.fr       */
+/*   Updated: 2025/11/18 14:28:45 by omerfarukon      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ char	*ft_after_line(char *perm);
 char	*ft_find_n(char	*perm, int fd);
 char	*ft_one_line(char *perm);
 
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *str, int ch);
-char	*ft_strjoin(char *s1, char *s2);
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t count, size_t size);
+size_t	ft_strlenn(const char *str);
+char	*ft_strchrs(const char *str, int ch);
+char	*ft_strjoinn(char *s1, char *s2);
+void	ft_bzeroo(void *s, size_t n);
+void	*ft_callocc(size_t count, size_t size);
 
 #endif

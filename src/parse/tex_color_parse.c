@@ -1,4 +1,4 @@
-#include "../inc/cub3d.h"
+#include "../cub3d.h"
 
 int is_writed_two_times(char **split, t_cfg *cfg)
 {
@@ -31,7 +31,7 @@ int	assign_tex(char **split, t_cfg *cfg)
 	return (0);
 }
 
-int	set_color(t_cfg *cfg, char *first, char **colors, int i)
+void	set_color(t_cfg *cfg, char *first, char **colors, int i)
 {
 	if (first[0] == 'F' && i == 0)
 		cfg->floor.r = ft_atoi(colors[0]);
@@ -45,11 +45,21 @@ int	set_color(t_cfg *cfg, char *first, char **colors, int i)
 		cfg->ceil.g = ft_atoi(colors[1]);
 	else if (first[0] == 'C' && i == 2)
 		cfg->ceil.b = ft_atoi(colors[2]);
+}
+
+int		check_tex_color_value(t_cfg *cfg)
+{
 	if (!in_range(cfg->floor.r) || !in_range(cfg->floor.g)
-			|| !in_range(cfg->floor.b) || !in_range(cfg->ceil.r)
-			|| !in_range(cfg->ceil.g) || !in_range(cfg->ceil.b))
+		|| !in_range(cfg->floor.b) || !in_range(cfg->ceil.r)
+		|| !in_range(cfg->ceil.g) || !in_range(cfg->ceil.b))
 	{
 		ft_error("RGB colors have to between 0 to 255!");
+		return (1);
+	}
+	if (!cfg->no || !cfg->so || !cfg->we || !cfg->ea)
+	{
+		printf("----%d\n", cfg->ceil.b);
+		ft_error("Missing data\n");
 		return (1);
 	}
 	return (0);
@@ -63,9 +73,9 @@ int		check_color_and_set(t_cfg *cfg, char **s)
 
 	i = -1;
 	colors = ft_split(s[1], ',');
-	if (!colors[2])
+	if (!colors[2] || colors[3] != NULL)
 	{
-		ft_error("Missing colors");
+		ft_error("Wrong color value number. It need to be 3!");
 		free_double(colors);
 		return(1);
 	}
@@ -82,11 +92,7 @@ int		check_color_and_set(t_cfg *cfg, char **s)
 				return (1);
 			}
 		}
-		if (set_color(cfg, s[0], colors, i))
-		{
-			free_double(colors);
-			return (1);
-		}
+		set_color(cfg, s[0], colors, i);
 	}
 	free_double(colors);
 	return (0);
@@ -96,6 +102,7 @@ int		check_texture_and_set(t_cfg *cfg, char **s)
 {
 	int fd;
 
+	fd = 0;
 	if (s[0][0] == 'N')
 		fd = open(s[1], O_RDONLY);
 	else if (s[0][0] == 'S')
@@ -166,22 +173,15 @@ int		set_tex_color_lines(t_cfg *cfg, int	fd)
 			return (1);
 		else if (line[0] == '\n')
 			continue ;
-		else
-			if (check_line(cfg, line))
-			{
-				free(line);
-				return (1);
-			}
-			i++;
+		if (check_line(cfg, line))
+		{
+			free(line);
+			return (1);
+		}
+		i++;
 		free(line);
 	}
-	if (!cfg->no || !cfg->so || !cfg->we || !cfg->ea || !cfg->floor.r
-			|| !cfg->floor.g || !cfg->floor.b || !cfg->ceil.r
-			|| !cfg->ceil.g || !cfg->ceil.b)
-	{
-		ft_error("Missing data");
-		free(line);
+	if (check_tex_color_value(cfg))
 		return (1);
-	}
 	return (0);
 }

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int ft_strcmp(char *s1, char *s2)
 {
@@ -34,8 +34,6 @@ void	ft_error(char *str)
 
 int	in_range(int v)
 {
-	int i;
-
 	if (v >= 0 && v <= 255)
 		return (1);
 	else

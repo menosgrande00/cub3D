@@ -133,6 +133,7 @@ int		ft_strcmp(char *s1, char *s2);
 void	free_double(char **str);
 int		in_range(int v);
 int		set_tex_color_lines(t_cfg *cfg, int	fd);
+int		validate_chars_and_player(t_map *map, t_player *player);
 int		set_map_parse(t_cub *cfg, int fd);
 int		is_line_blank(char *s);
 void	trim_newline(char *s);

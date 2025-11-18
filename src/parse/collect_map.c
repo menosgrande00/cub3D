@@ -1,4 +1,4 @@
-#include "../inc/cub3d.h"
+#include "../cub3d.h"
 
 static void	line_alloc(char ***s, int n, int *capacity)
 {

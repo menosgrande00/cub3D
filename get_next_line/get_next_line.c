@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omerfarukonal <omerfarukonal@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:54:07 by oonal             #+#    #+#             */
-/*   Updated: 2024/12/28 14:54:08 by oonal            ###   ########.fr       */
+/*   Updated: 2025/11/18 14:28:58 by omerfarukon      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_after_line(char *perm)
 		free (perm);
 		return (NULL);
 	}
-	str = malloc(ft_strlen(perm) - i + 1);
+	str = malloc(ft_strlenn(perm) - i + 1);
 	if (!str)
 		return (NULL);
 	i++;
@@ -69,9 +69,9 @@ char	*ft_find_n(char	*perm, int fd)
 	char	*line;
 	ssize_t	r;
 
-	line = ft_calloc(1, BUFFER_SIZE + 1);
+	line = ft_callocc(1, BUFFER_SIZE + 1);
 	r = 1;
-	while (!ft_strchr(line, '\n') && r > 0)
+	while (!ft_strchrs(line, '\n') && r > 0)
 	{
 		r = read(fd, line, BUFFER_SIZE);
 		if (r == -1 || (r == 0 && (!perm || *perm == '\0')))
@@ -81,7 +81,7 @@ char	*ft_find_n(char	*perm, int fd)
 			return (NULL);
 		}
 		line[r] = '\0';
-		perm = ft_strjoin(perm, line);
+		perm = ft_strjoinn(perm, line);
 	}
 	free (line);
 	return (perm);

@@ -1,4 +1,4 @@
-#include "../inc/cub3d.h"
+#include "../cub3d.h"
 
 static void	set_player_dir(t_player *p, char c)
 {
@@ -52,7 +52,7 @@ int	validate_chars_and_player(t_map *map, t_player *player)
 	while (++y < map->h)
 	{
 		x = -1;
-		while(++x < map->w)
+		while(++x < (int)ft_strlen(map->grid[y]))
 		{
 			c = map->grid[y][x];
 			if (!is_allowed_char(c))

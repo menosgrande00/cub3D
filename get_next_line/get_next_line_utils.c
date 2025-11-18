@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omerfarukonal <omerfarukonal@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:54:11 by oonal             #+#    #+#             */
-/*   Updated: 2024/12/28 14:54:12 by oonal            ###   ########.fr       */
+/*   Updated: 2025/11/18 14:29:47 by omerfarukon      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoinn(char *s1, char *s2)
 {
 	char	*new;
 	int		i;
@@ -22,7 +22,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	if (!s2)
 		return (NULL);
-	new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	new = malloc(ft_strlenn(s1) + ft_strlenn(s2) + 1);
 	if (!new)
 	{
 		free (s1);
@@ -40,7 +40,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlenn(const char *str)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchrs(const char *s, int c)
 {
 	if (!s)
 		return (NULL);
@@ -65,18 +65,18 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *)s);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_callocc(size_t count, size_t size)
 {
 	void	*result;
 
 	result = malloc(count * size);
 	if (result == NULL)
 		return (NULL);
-	ft_bzero(result, count * size);
+	ft_bzeroo(result, count * size);
 	return (result);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzeroo(void *s, size_t n)
 {
 	size_t	i;
 	char	*dest;
