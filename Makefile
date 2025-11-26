@@ -3,7 +3,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-HEADERS = inc/cub3d.h
+HEADERS = src/cub3d.h
 
 SRC_DIR = src/
 
@@ -16,6 +16,10 @@ LIBFT = $(LIBFT_DIR)libft.a
 
 GNL_DIR = get_next_line/
 GNL = $(GNL_DIR)get_next_line.a
+
+MLX_DIR = minilibx-linux/
+MLX = $(MLX_DIR)libmlx.a
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 SRCS =	$(SRC_DIR)/main.c \
 		$(UTILS_DIR)/utils.c \
@@ -40,13 +44,17 @@ $(LIBFT) :
 $(GNL) :
 	make -C $(GNL_DIR)
 
-$(NAME) : $(LIBFT) $(GNL) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(GNL)
+$(MLX) :
+	make -C $(MLX_DIR)
+
+$(NAME) : $(LIBFT) $(GNL) $(MLX) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(GNL) $(MLX_FLAGS)
 
 clean :
 	rm -rf $(OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(GNL_DIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
 
 fclean : clean
 	rm -rf $(NAME)
