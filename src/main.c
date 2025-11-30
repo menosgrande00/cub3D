@@ -2,6 +2,8 @@
 
 static void	init_cub(t_cub *cub)
 {
+	cub->screen_w = 1920;
+	cub->screen_h = 1080;
 	cub->cfg.no = NULL;
 	cub->cfg.so = NULL;
 	cub->cfg.we = NULL;
@@ -28,14 +30,17 @@ int main(int argc, char **argv)
 			//free_all(&cub);
 			return (1);
 		}
-		printf("%s\n", cub.cfg.no);
-		printf("%s\n", cub.cfg.so);
-		printf("%s\n", cub.cfg.we);
-		printf("%s\n", cub.cfg.ea);
+		print_cub(&cub);
+		create_cub(&cub);
 
-		int i = -1;
-		while (++i < cub.map.h)
-			printf("%s\n", cub.map.grid[i]);
+		//printf("%s\n", cub.cfg.no);
+		//printf("%s\n", cub.cfg.so);
+		//printf("%s\n", cub.cfg.we);
+		//printf("%s\n", cub.cfg.ea);
+
+		//int i = -1;
+		//while (++i < cub.map.h)
+		//	printf("%s\n", cub.map.grid[i]);
 	}
 	else
 		ft_error("Program takes just a 2 arguman!");

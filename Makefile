@@ -29,6 +29,8 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(PARSE_DIR)/map_parse.c \
 		$(PARSE_DIR)/tex_color_parse.c \
 		$(PARSE_DIR)/validate_chars.c \
+		src/render/check_struct.c \
+		src/render/mlx_init.c \
 
 OBJS = $(SRCS:.c=.o)
 
