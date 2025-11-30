@@ -27,4 +27,8 @@ void create_cub(t_cub *cub)
 	}
 	set_texture(cub);
 
+	cub->frame.img = mlx_new_image(cub->mlx, cub->screen_w, cub->screen_h);
+	cub->frame.addr = mlx_get_data_addr(cub->frame.img, &cub->frame.bpp, &cub->frame.line_len, &cub->frame.end);
+	cub->frame.w = cub->screen_w;
+    cub->frame.h = cub->screen_h;
 }
