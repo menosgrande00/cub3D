@@ -1,9 +1,9 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
-# include "../minilibx-linux/mlx.h"
+# include "../helper_function/libft/libft.h"
+# include "../helper_function/get_next_line/get_next_line.h"
+# include "../helper_function/minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -143,6 +143,6 @@ void	ft_error(char *str);
 
 
 void	print_cub(t_cub *cub);
-void create_cub(t_cub *cub);
+void 	create_cub(t_cub *cub);
 void	setup_hooks(t_cub *cub);
 #endif

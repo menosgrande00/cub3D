@@ -13,13 +13,15 @@ UTILS_DIR = src/utils/
 
 RENDER_DIR = src/render/
 
-LIBFT_DIR = libft/
+HELPER_DIR = helper_function/
+
+LIBFT_DIR = $(HELPER_DIR)libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
-GNL_DIR = get_next_line/
+GNL_DIR = $(HELPER_DIR)get_next_line/
 GNL = $(GNL_DIR)get_next_line.a
 
-MLX_DIR = minilibx-linux/
+MLX_DIR = $(HELPER_DIR)minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
