@@ -1,0 +1,39 @@
+# Compiled files
+*.o
+*.a
+*.so
+*.out
+
+# Executable
+cub3D
+
+# Test files
+a.c
+a.out
+test
+test.c
+
+# Debug files
+check_struct
+check_struct1
+vgcore.*
+*.dSYM/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+libft/*.o
+libft/libft.a
+get_next_line/*.o
+minilibx-linux/*.o
+minilibx-linux/libmlx.a
+minilibx-linux/libmlx_Linux.a

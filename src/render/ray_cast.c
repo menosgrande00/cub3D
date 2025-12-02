@@ -1,7 +1,6 @@
-
 #include "../cub3d.h"
 
-void raycast()
+void	raycast(t_cub *cub)
 {
 
 }

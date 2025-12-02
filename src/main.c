@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 			//free_all(&cub);
 			return (1);
 		}
-		//print_cub(&cub);
 		create_cub(&cub);
+		print_cub(&cub);
 
 		//printf("%s\n", cub.cfg.no);
 		//printf("%s\n", cub.cfg.so);
