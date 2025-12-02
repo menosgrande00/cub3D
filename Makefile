@@ -11,6 +11,8 @@ PARSE_DIR = src/parse/
 
 UTILS_DIR = src/utils/
 
+RENDER_DIR = src/render/
+
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
@@ -29,8 +31,10 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(PARSE_DIR)/map_parse.c \
 		$(PARSE_DIR)/tex_color_parse.c \
 		$(PARSE_DIR)/validate_chars.c \
-		src/render/check_struct.c \
-		src/render/mlx_init.c \
+		$(RENDER_DIR)check_struct.c \
+		$(RENDER_DIR)mlx_init.c \
+		$(RENDER_DIR)ray_cast.c \
+		$(RENDER_DIR)key_hooks.c \
 
 OBJS = $(SRCS:.c=.o)
 

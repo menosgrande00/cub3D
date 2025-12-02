@@ -144,4 +144,5 @@ void	ft_error(char *str);
 
 void	print_cub(t_cub *cub);
 void create_cub(t_cub *cub);
+void	setup_hooks(t_cub *cub);
 #endif

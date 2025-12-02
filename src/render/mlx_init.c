@@ -12,14 +12,14 @@ static void set_texture_pixel(t_cub *cub)
 	cub->tex.so.addr = mlx_get_data_addr(cub->tex.so.img, &cub->tex.so.bpp, &cub->tex.so.line_len, &cub->tex.so.end);
 	//printf(" south ımage = %p , south bpp = %d , south line = %d ,  south end = %d \n" , cub->tex.so.img, cub->tex.so.bpp, cub->tex.so.line_len, cub->tex.so.end);
 	cub->tex.we.addr = mlx_get_data_addr(cub->tex.we.img, &cub->tex.we.bpp, &cub->tex.we.line_len, &cub->tex.we.end);
-	//printf(" west ımage = %p , wesr bpp = %d , wesr line = %d ,  wesr end = %d \n" , cub->tex.we.img, cub->tex.we.bpp, cub->tex.we.line_len, cub->tex.we.end);
+	//printf(" west ımage = %p , west bpp = %d , west line = %d ,  west end = %d \n" , cub->tex.we.img, cub->tex.we.bpp, cub->tex.we.line_len, cub->tex.we.end);
 	cub->tex.ea.addr = mlx_get_data_addr(cub->tex.ea.img, &cub->tex.ea.bpp, &cub->tex.ea.line_len, &cub->tex.ea.end);
 	//printf(" east ımage = %p , east bpp = %d , east line = %d ,  east end = %d \n" , cub->tex.ea.img, cub->tex.ea.bpp, cub->tex.ea.line_len, cub->tex.ea.end);
 
 	/*	north ımage = 0x14e1a2f0 , north bpp = 32 , north line = 256 ,  north end = 0 
 		south ımage = 0x14e1a5a0 , south bpp = 32 , south line = 256 ,  south end = 0 
 		west ımage = 0x14e1a690 , wesr bpp = 32 , wesr line = 256 ,  wesr end = 0 
-		east ımage = 0x14e1a780 , east bpp = 32 , east line = 256 ,  east end = 0 */
+		east ımage = 0x14e1a780 , east bpp = 32 , east line = 256 ,  east end = 0 ; line 256 olma sebebi 64 * 4 byte  sadece bir line uzunluğu yani toplam texture boyutu 64 * 64 * 4 byte */  
 }
 
 static void set_frame_buffer(t_cub *cub)
@@ -29,8 +29,56 @@ static void set_frame_buffer(t_cub *cub)
 	//printf(" frame ımage = %p , frame bpp = %d , frame line = %d ,  frame end = %d \n" , cub->frame.img, cub->frame.bpp, cub->frame.line_len, cub->frame.end);
 	cub->frame.w = cub->screen_w;
     cub->frame.h = cub->screen_h;
-	
-	//frame ımage = 0x14e1a870 , frame bpp = 32 , frame line = 7680 ,  frame end = 0 
+
+	//frame ımage = 0x14e1a870 , frame bpp = 32 , frame line = 7680 ,  frame end = 0 ; frame line 7680 olma sebebi 1920 * 4 byte sadece bir line uzunluğu yani toplam texture boyutu 1080 * 1920 * 4 byte;
+}
+
+static void put_pixel(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+	int		offset;
+
+	if (x < 0 || x >= img->w || y < 0 || y >= img->h)
+		return;
+	offset = (y * img->line_len) + (x * (img->bpp / 8));
+	pixel = img->addr + offset;
+	*(int *)pixel = color;
+}
+
+static int create_color(t_color *c)
+{
+	return (c->r << 16 | c->g << 8 | c->b);
+}
+
+static int render_frame(t_cub *cub)
+{
+	int		x;
+	int		y;
+
+	// Tüm ekranı tara
+	y = 0;
+	while (y < cub->screen_h)
+	{
+		x = 0;
+		while (x < cub->screen_w)
+		{
+			// Üst yarı: tavan
+			if (y < cub->screen_h / 2)
+				put_pixel(&cub->frame, x, y, create_color(&cub->cfg.ceil));
+			// Alt yarı: zemin
+			else
+				put_pixel(&cub->frame, x, y, create_color(&cub->cfg.floor));
+			x++;
+		}
+		y++;
+	}
+
+	// Raycasting buraya gelecek
+	// raycast(cub);
+
+	// Frame'i ekrana çiz
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame.img, 0, 0);
+	return (0);
 }
 void create_cub(t_cub *cub)
 {
@@ -44,6 +92,12 @@ void create_cub(t_cub *cub)
 	{
 		//return veya exit free;
 	}
-	set_texture_pixel(cub);
-	set_frame_buffer(cub);
+	set_texture_pixel(cub); // pixel verileri;
+	set_frame_buffer(cub); // frame buffer verileri;
+	setup_hooks(cub);
+	// Loop hook: her frame'de render_frame çağır
+	mlx_loop_hook(cub->mlx, render_frame, cub);
+	
+	// Loop başlat
+	mlx_loop(cub->mlx);
 }
