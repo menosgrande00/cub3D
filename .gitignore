@@ -14,8 +14,6 @@ test
 test.c
 
 # Debug files
-check_struct
-check_struct1
 vgcore.*
 *.dSYM/
 

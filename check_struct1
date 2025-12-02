@@ -1,0 +1,97 @@
+
+╔════════════════════════════════════════╗
+║      CUB3D STRUCTURE DEBUG INFO        ║
+╚════════════════════════════════════════╝
+
+=== MAIN (t_cub) ===
+  mlx: 0x522530
+  win: 0x537ae0
+  screen_w: 1920
+  screen_h: 1080
+
+=== CONFIG (t_cfg) ===
+  Textures:
+    NO: ./assets/north.xpm
+    SO: ./assets/south.xpm
+    WE: ./assets/west.xpm
+    EA: ./assets/east.xpm
+=== Ceiling (t_color) ===
+  r: 225
+  g: 30
+  b: 0
+
+=== Floor (t_color) ===
+  r: 220
+  g: 100
+  b: 0
+
+
+=== MAP (t_map) ===
+  Width: 7
+  Height: 3
+  Grid:
+    [0]: 111111 
+    [1]: 100001 
+    [2]: 1111111
+
+=== PLAYER (t_player) ===
+  Position:
+    x: 3.50
+    y: 1.50
+  Direction:
+    x: 0.00
+    y: -1.00
+  Plane:
+    x: 0.66
+    y: 0.00
+  Move speed: 0.08
+  Rotation speed: 0.05
+
+=== Frame (t_img) ===
+  img: 0x539a50
+  addr: 0x7faaf3ff5000
+  bpp: 32
+  line_len: 7680
+  end: 0
+  w: 1920
+  h: 1080
+
+=== TEXTURES (t_tex) ===
+=== North (t_img) ===
+  img: 0x5394d0
+  addr: 0x7faaf4daa000
+  bpp: 32
+  line_len: 256
+  end: 0
+  w: 64
+  h: 64
+
+=== South (t_img) ===
+  img: 0x539780
+  addr: 0x7faaf4da4000
+  bpp: 32
+  line_len: 256
+  end: 0
+  w: 64
+  h: 64
+
+=== West (t_img) ===
+  img: 0x539870
+  addr: 0x7faaf4d9e000
+  bpp: 32
+  line_len: 256
+  end: 0
+  w: 64
+  h: 64
+
+=== East (t_img) ===
+  img: 0x539960
+  addr: 0x7faaf4af7000
+  bpp: 32
+  line_len: 256
+  end: 0
+  w: 64
+  h: 64
+
+════════════════════════════════════════
+
