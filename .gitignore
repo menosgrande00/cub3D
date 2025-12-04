@@ -3,12 +3,14 @@
 *.a
 *.so
 *.out
+objects/
 
 # Executable
 cub3D
 
 # Test files
 a.c
+b.c
 a.out
 test
 test.c

@@ -96,7 +96,7 @@ void create_cub(t_cub *cub)
 	set_frame_buffer(cub); // frame buffer verileri;
 	setup_hooks(cub);
 	// Loop hook: her frame'de render_frame çağır
-	mlx_loop_hook(cub->mlx, render_frame, cub);
+	mlx_loop_hook(cub->mlx, render_frame, cub); // şuan en başta tavan ve yeri basıyor bunu raycast kısmı yapılınca yer ve tavan pixel verisine göre yapılıp arasına duvar basılacak
 	
 	// Loop başlat
 	mlx_loop(cub->mlx);
