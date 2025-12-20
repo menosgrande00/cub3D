@@ -13,7 +13,7 @@
 # include <errno.h>
 # include <string.h>
 
-# define KEY_MAX	512		// Maximum tuş sayısı
+# define KEY_MAX	70000	// Maximum tuş sayısı
 # define RD_CHUNK	4096	// Dosya okuma buffer boyutu
 
 typedef struct	s_v2		// 2D vektör (konum/yön için)
@@ -145,4 +145,9 @@ void	ft_error(char *str);
 void	print_cub(t_cub *cub);
 void 	create_cub(t_cub *cub);
 void	setup_hooks(t_cub *cub);
+void	raycast(t_cub *cub);
+void	handle_input(t_cub *cub);
+void	move_forward_back(t_cub *cub);
+void	move_strafe(t_cub *cub);
+void	rotate_camera(t_cub *cub);
 #endif

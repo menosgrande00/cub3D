@@ -39,6 +39,9 @@ SRCS =	$(SRC_DIR)/main.c \
         $(RENDER_DIR)mlx_init.c \
         $(RENDER_DIR)ray_cast.c \
         $(RENDER_DIR)key_hooks.c \
+        $(RENDER_DIR)game_loop.c \
+		$(RENDER_DIR)rotate_camera.c \
+		$(RENDER_DIR)move_player.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 

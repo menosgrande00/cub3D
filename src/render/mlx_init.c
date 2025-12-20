@@ -1,5 +1,32 @@
 #include "../cub3d.h"
+#include <sys/time.h>
+#include <stdio.h>
 
+//silinecek fps için
+//void	display_fps(t_cub *cub)
+//{
+//    static int			frame_count = 0;
+//    static int			fps = 0;
+//    static struct timeval	last_time = {0, 0};
+//    struct timeval		current_time;
+//    double			elapsed;
+//    char			fps_str[32];
+
+//    frame_count++;
+//    gettimeofday(&current_time, NULL);
+//    if (last_time.tv_sec == 0)
+//        last_time = current_time;
+//    elapsed = (current_time.tv_sec - last_time.tv_sec)
+//        + (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
+//    if (elapsed >= 1.0)
+//    {
+//        fps = frame_count;
+//        frame_count = 0;
+//        last_time = current_time;
+//    }
+//    snprintf(fps_str, sizeof(fps_str), "FPS: %d", fps);
+//    mlx_string_put(cub->mlx, cub->win, 10, 20, 0x00FF00, fps_str);
+//}
 static void set_texture_pixel(t_cub *cub)
 {
 	cub->tex.no.img = mlx_xpm_file_to_image(cub->mlx,cub->cfg.no,&cub->tex.no.w,&cub->tex.no.h);
@@ -33,53 +60,21 @@ static void set_frame_buffer(t_cub *cub)
 	//frame ımage = 0x14e1a870 , frame bpp = 32 , frame line = 7680 ,  frame end = 0 ; frame line 7680 olma sebebi 1920 * 4 byte sadece bir line uzunluğu yani toplam texture boyutu 1080 * 1920 * 4 byte;
 }
 
-static void put_pixel(t_img *img, int x, int y, int color)
-{
-	char	*pixel;
-	int		offset;
-
-	if (x < 0 || x >= img->w || y < 0 || y >= img->h)
-		return;
-	offset = (y * img->line_len) + (x * (img->bpp / 8));
-	pixel = img->addr + offset;
-	*(int *)pixel = color;
-}
-
-static int create_color(t_color *c)
-{
-	return (c->r << 16 | c->g << 8 | c->b);
-}
-
 static int render_frame(t_cub *cub)
 {
-	int		x;
-	int		y;
+	// Input işle (hareket ve rotasyon)
+	handle_input(cub);
 
-	// Tüm ekranı tara
-	y = 0;
-	while (y < cub->screen_h)
-	{
-		x = 0;
-		while (x < cub->screen_w)
-		{
-			// Üst yarı: tavan
-			if (y < cub->screen_h / 2)
-				put_pixel(&cub->frame, x, y, create_color(&cub->cfg.ceil));
-			// Alt yarı: zemin
-			else
-				put_pixel(&cub->frame, x, y, create_color(&cub->cfg.floor));
-			x++;
-		}
-		y++;
-	}
-
-	// Raycasting buraya gelecek
-	// raycast(cub);
+	// Raycasting - duvarlar, tavan ve zemini çizer
+	raycast(cub);
 
 	// Frame'i ekrana çiz
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame.img, 0, 0);
+	//display_fps(cub);  // FPS göster
 	return (0);
 }
+
+
 void create_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
@@ -97,7 +92,7 @@ void create_cub(t_cub *cub)
 	setup_hooks(cub);
 	// Loop hook: her frame'de render_frame çağır
 	mlx_loop_hook(cub->mlx, render_frame, cub); // şuan en başta tavan ve yeri basıyor bunu raycast kısmı yapılınca yer ve tavan pixel verisine göre yapılıp arasına duvar basılacak
-	
+
 	// Loop başlat
 	mlx_loop(cub->mlx);
 }

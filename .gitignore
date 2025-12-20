@@ -9,8 +9,6 @@ objects/
 cub3D
 
 # Test files
-a.c
-b.c
 a.out
 test
 test.c

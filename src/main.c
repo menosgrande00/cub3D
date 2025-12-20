@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 			//free_all(&cub);
 			return (1);
 		}
-		create_cub(&cub);
-		print_cub(&cub);
+		// print_cub(&cub);  // Debug için - gerekirse aç
+		create_cub(&cub);  // Bu fonksiyon mlx_loop çağırdığı için buradan geri dönmez
 
 		//printf("%s\n", cub.cfg.no);
 		//printf("%s\n", cub.cfg.so);
