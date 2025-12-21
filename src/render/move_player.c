@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:56:55 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/20 18:02:56 by sesimsek         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:34:19 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ void	move_forward_back(t_cub *cub)
 	{
 		new_x = cub->player.pos.x + cub->player.dir.x * cub->player.move_speed;
 		new_y = cub->player.pos.y + cub->player.dir.y * cub->player.move_speed;
-		if (is_valid_pos(cub, new_x, cub->player.pos.y))
+		// Her iki ekseni birlikte kontrol et (köşe collision fix)
+		if (is_valid_pos(cub, new_x, new_y))
+		{
 			cub->player.pos.x = new_x;
-		if (is_valid_pos(cub, cub->player.pos.x, new_y))
 			cub->player.pos.y = new_y;
+		}
 	}
 	if (cub->keys.held[115])
 	{
 		new_x = cub->player.pos.x - cub->player.dir.x * cub->player.move_speed;
 		new_y = cub->player.pos.y - cub->player.dir.y * cub->player.move_speed;
-		if (is_valid_pos(cub, new_x, cub->player.pos.y))
+		if (is_valid_pos(cub, new_x, new_y))
+		{
 			cub->player.pos.x = new_x;
-		if (is_valid_pos(cub, cub->player.pos.x, new_y))
 			cub->player.pos.y = new_y;
+		}
 	}
 }
 
@@ -68,10 +71,11 @@ void	move_strafe(t_cub *cub)
 			* cub->player.move_speed;
 		new_y = cub->player.pos.y + cub->player.plane.y
 			* cub->player.move_speed;
-		if (is_valid_pos(cub, new_x, cub->player.pos.y))
+		if (is_valid_pos(cub, new_x, new_y))
+		{
 			cub->player.pos.x = new_x;
-		if (is_valid_pos(cub, cub->player.pos.x, new_y))
 			cub->player.pos.y = new_y;
+		}
 	}
 	if (cub->keys.held[97])
 	{
@@ -79,9 +83,10 @@ void	move_strafe(t_cub *cub)
 			* cub->player.move_speed;
 		new_y = cub->player.pos.y - cub->player.plane.y
 			* cub->player.move_speed;
-		if (is_valid_pos(cub, new_x, cub->player.pos.y))
+		if (is_valid_pos(cub, new_x, new_y))
+		{
 			cub->player.pos.x = new_x;
-		if (is_valid_pos(cub, cub->player.pos.x, new_y))
 			cub->player.pos.y = new_y;
+		}
 	}
 }
