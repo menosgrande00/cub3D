@@ -6,23 +6,11 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:22:04 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/21 16:34:18 by sesimsek         ###   ########.fr       */
+/*   Updated: 2025/12/24 16:27:33 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-static int	get_texture_color(t_img *tex, int tex_x, int tex_y)
-{
-	char	*pixel;
-	int		offset;
-
-	if (tex_x < 0 || tex_x >= tex->w || tex_y < 0 || tex_y >= tex->h)
-		return (0);
-	offset = (tex_y * tex->line_len) + (tex_x * (tex->bpp / 8));
-	pixel = tex->addr + offset;
-	return (*(int *)pixel);
-}
 
 // Hangi texture kullanılacağını belirle
 static t_img	*get_wall_texture(t_cub *cub, t_rayhit *hit)
@@ -100,7 +88,7 @@ static void	perform_dda(t_cub *cub, t_rayhit *hit, t_v2 *ray_dir, t_v2 *delta_di
 	hit->wall_x -= floor(hit->wall_x);
 }
 
-// Bir dikey çizgi (duvar dilimi) çiz
+// Bir dikey çizgi (duvar dilimi) çiz - Cache-optimized
 static void	draw_wall_stripe(t_cub *cub, int x, t_rayhit *hit)
 {
 	t_img	*tex;
@@ -112,13 +100,17 @@ static void	draw_wall_stripe(t_cub *cub, int x, t_rayhit *hit)
 	double	step;
 	double	tex_pos;
 	int		y;
-	int		color;
 	int		ceil_color;
 	int		floor_color;
-	char	*pixel;
+	int		*dst;
+	int		x_offset;
+	int		pixel_stride;
+	char	*tex_data;
+	int		tex_line_len;
 
-	// Duvar yüksekliğini hesapla
-	line_h = (int)(cub->screen_h / hit->perp_dist);
+	// Duvar yüksekliğini hesapla (reciprocal multiplication - faster)
+	double inv_dist = 1.0 / hit->perp_dist;
+	line_h = (int)(cub->screen_h * inv_dist);
 	draw_start = -line_h / 2 + cub->screen_h / 2;
 	if (draw_start < 0)
 		draw_start = 0;
@@ -126,16 +118,32 @@ static void	draw_wall_stripe(t_cub *cub, int x, t_rayhit *hit)
 	if (draw_end >= cub->screen_h)
 		draw_end = cub->screen_h - 1;
 
-	// Renkleri önceden hesapla
+	// Renkleri önceden hesapla (döngü dışında)
 	ceil_color = (cub->cfg.ceil.r << 16) | (cub->cfg.ceil.g << 8) | cub->cfg.ceil.b;
 	floor_color = (cub->cfg.floor.r << 16) | (cub->cfg.floor.g << 8) | cub->cfg.floor.b;
 
-	// Tavan çiz (0'dan draw_start'a kadar)
+	// Pointer arithmetic için hazırlık (cache-friendly sequential access)
+	x_offset = x * (cub->frame.bpp / 8);
+	pixel_stride = cub->frame.line_len / sizeof(int);
+	dst = (int *)(cub->frame.addr + x_offset);
+
+	// Tavan çiz (0'dan draw_start'a kadar) - Sequential write (SIMD-friendly)
 	y = 0;
+	// Loop unrolling hint için 4'lü gruplar (CPU cache line = 64 bytes = 16 pixels)
+	while (y + 3 < draw_start)
+	{
+		dst[0] = ceil_color;
+		dst[pixel_stride] = ceil_color;
+		dst[pixel_stride * 2] = ceil_color;
+		dst[pixel_stride * 3] = ceil_color;
+		dst += pixel_stride * 4;
+		y += 4;
+	}
+	// Kalan pixelleri işle
 	while (y < draw_start)
 	{
-		pixel = cub->frame.addr + (y * cub->frame.line_len + x * (cub->frame.bpp / 8));
-		*(int *)pixel = ceil_color;
+		*dst = ceil_color;
+		dst += pixel_stride;
 		y++;
 	}
 
@@ -146,32 +154,48 @@ static void	draw_wall_stripe(t_cub *cub, int x, t_rayhit *hit)
 		(hit->side == SIDE_Y && hit->map_y < cub->player.pos.y))
 		tex_x = tex->w - tex_x - 1;
 
-	// Texture mapping için step ve başlangıç pozisyonu
-	step = 1.0 * tex->h / line_h;
+	// Texture pointer ve stride (cache locality için)
+	tex_data = tex->addr + tex_x * (tex->bpp / 8);
+	tex_line_len = tex->line_len / sizeof(int);
+
+	// Texture mapping için step ve başlangıç pozisyonu (optimized)
+	double inv_line_h = 1.0 / line_h;
+	step = tex->h * inv_line_h;
 	tex_pos = (draw_start - cub->screen_h / 2 + line_h / 2) * step;
 
-	// Duvar çiz
+	// Duvar çiz - Optimized texture lookup
 	y = draw_start;
 	while (y < draw_end)
 	{
 		tex_y = (int)tex_pos & (tex->h - 1);
 		tex_pos += step;
-		color = get_texture_color(tex, tex_x, tex_y);
-		pixel = cub->frame.addr + (y * cub->frame.line_len + x * (cub->frame.bpp / 8));
-		*(int *)pixel = color;
+		// Direct texture memory access (cache-friendly)
+		*dst = *((int *)(tex_data + tex_y * tex->line_len));
+		dst += pixel_stride;
 		y++;
 	}
 
-	// Zemin çiz (draw_end'den screen_h'ye kadar)
+	// Zemin çiz (draw_end'den screen_h'ye kadar) - Sequential write (SIMD-friendly)
+	// Loop unrolling - 4 pixel birden
+	while (y + 3 < cub->screen_h)
+	{
+		dst[0] = floor_color;
+		dst[pixel_stride] = floor_color;
+		dst[pixel_stride * 2] = floor_color;
+		dst[pixel_stride * 3] = floor_color;
+		dst += pixel_stride * 4;
+		y += 4;
+	}
+	// Kalan pixelleri işle
 	while (y < cub->screen_h)
 	{
-		pixel = cub->frame.addr + (y * cub->frame.line_len + x * (cub->frame.bpp / 8));
-		*(int *)pixel = floor_color;
+		*dst = floor_color;
+		dst += pixel_stride;
 		y++;
 	}
 }
 
-// Ana raycast fonksiyonu
+// Ana raycast fonksiyonu - Cache & CPU optimized
 void	raycast(t_cub *cub)
 {
 	int			x;
@@ -179,12 +203,15 @@ void	raycast(t_cub *cub)
 	t_v2		ray_dir;
 	t_v2		delta_dist;
 	t_rayhit	hit;
+	double		screen_w_recip;
 
+	// Division'ı loop dışına taşı (CPU cache + branch predictor friendly)
+	screen_w_recip = 2.0 / (double)cub->screen_w;
 	x = 0;
 	while (x < cub->screen_w)
 	{
-		// Kamera X koordinatı (-1 ile 1 arası)
-		camera_x = 2 * x / (double)cub->screen_w - 1;
+		// Kamera X koordinatı (-1 ile 1 arası) - multiplication only
+		camera_x = x * screen_w_recip - 1.0;
 		
 		// Ray yönünü hesapla
 		ray_dir.x = cub->player.dir.x + cub->player.plane.x * camera_x;

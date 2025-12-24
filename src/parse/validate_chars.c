@@ -71,8 +71,8 @@ int	validate_chars_and_player(t_map *map, t_player *player)
 				player->pos.x = (double)x + 0.5;
 				player->pos.y = (double)y + 0.5;
 				set_player_dir(player, c);
-				player->move_speed = 0.08;
-				player->rot_speed  = 0.05;
+				player->move_speed = 0.03;
+				player->rot_speed  = 0.02;
 				map->grid[y][x] = '0';
 			}
 		}

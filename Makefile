@@ -1,6 +1,7 @@
 NAME = cub3D
 
 CC = cc
+
 CFLAGS = -Wall -Wextra -Werror
 
 HEADERS = src/cub3d.h
