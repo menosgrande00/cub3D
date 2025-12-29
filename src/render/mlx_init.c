@@ -49,6 +49,19 @@ static void set_frame_buffer(t_cub *cub)
 
 static int render_frame(t_cub *cub)
 {
+	struct timeval	current_time;
+	long			current_us;
+	long			elapsed_us;
+
+	gettimeofday(&current_time, NULL);
+	current_us = current_time.tv_sec * 1000000 + current_time.tv_usec;
+	elapsed_us = current_us - cub->last_frame_time;
+	
+	// 10ms = 10000 microseconds kontrolü
+	if (elapsed_us < 10000)
+		return (0);
+	
+	cub->last_frame_time = current_us;
 	handle_input(cub);
 	raycast(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame.img, 0, 0);
@@ -59,6 +72,8 @@ static int render_frame(t_cub *cub)
 
 void create_cub(t_cub *cub)
 {
+	struct timeval	start_time;
+
 	cub->mlx = mlx_init();
 	if(!cub->mlx)
 	{
@@ -69,8 +84,20 @@ void create_cub(t_cub *cub)
 	{
 		//return veya exit free;
 	}
+	// Başlangıç zamanını ayarla
+	gettimeofday(&start_time, NULL);
+	cub->last_frame_time = start_time.tv_sec * 1000000 + start_time.tv_usec;
 	set_texture_pixel(cub); // pixel verileri;
 	set_frame_buffer(cub); // frame buffer verileri;
+	// Tüm precomputed değerler (bir arada - cache friendly)
+	cub->ceil_color_int = (cub->cfg.ceil.r << 16) | (cub->cfg.ceil.g << 8)
+		| cub->cfg.ceil.b;
+	cub->floor_color_int = (cub->cfg.floor.r << 16) | (cub->cfg.floor.g << 8)
+		| cub->cfg.floor.b;
+	cub->pixel_stride = cub->frame.line_len / sizeof(int);
+	cub->screen_w_recip = 2.0 / (double)cub->screen_w;
+	cub->cos_rot = cos(cub->player.rot_speed);
+	cub->sin_rot = sin(cub->player.rot_speed);
 	setup_hooks(cub);
 	// Loop hook: her frame'de render_frame çağır
 	mlx_loop_hook(cub->mlx, render_frame, cub); // şuan en başta tavan ve yeri basıyor bunu raycast kısmı yapılınca yer ve tavan pixel verisine göre yapılıp arasına duvar basılacak

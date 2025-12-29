@@ -2,8 +2,8 @@
 
 static void	init_cub(t_cub *cub)
 {
-	cub->screen_w = 1920;
-	cub->screen_h = 1080;
+	cub->screen_w = 2160;
+	cub->screen_h = 1440;
 	cub->cfg.no = NULL;
 	cub->cfg.so = NULL;
 	cub->cfg.we = NULL;

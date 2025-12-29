@@ -113,6 +113,10 @@ typedef struct	s_rayhit	// Ray casting çarpma bilgisi
 	double	wall_x;			// Duvarda çarpma noktası (0.0-1.0)
 	int		map_x;			// Haritada X koordinatı
 	int		map_y;			// Haritada Y koordinatı
+	int		step_x;			// X yönünde adım (-1 veya 1)
+	int		step_y;			// Y yönünde adım (-1 veya 1)
+	t_v2	ray_dir;		// Ray yönü vektörü
+	t_v2	delta_dist;		// Delta mesafe vektörü
 }	t_rayhit;
 
 typedef struct	s_cub		// Ana program yapısı
@@ -123,6 +127,13 @@ typedef struct	s_cub		// Ana program yapısı
 	int			screen_h;	// Ekran yüksekliği (pixel)
 	t_img		frame;		// Render edilecek frame image
 	t_tex		tex;		// Yüklü texture'lar
+	long		last_frame_time;	// Son frame zamanı (microseconds)
+	int			ceil_color_int;	// Precomputed ceiling color
+	int			floor_color_int;	// Precomputed floor color
+	int			pixel_stride;	// Precomputed frame.line_len / sizeof(int)
+	double		screen_w_recip;	// Precomputed 2.0 / screen_w
+	double		cos_rot;	// Cached cos(rot_speed)
+	double		sin_rot;	// Cached sin(rot_speed)
 	t_map		map;		// Harita grid
 	t_player	player;		// Oyuncu bilgileri
 	t_keys		keys;		// Tuş durumları
