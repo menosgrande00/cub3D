@@ -6,11 +6,18 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:22:04 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/29 21:43:28 by sesimsek         ###   ########.fr       */
+/*   Updated: 2025/12/29 21:49:45 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+typedef struct s_draw_info
+{
+	int	line_h;
+	int	draw_start;
+	int	draw_end;
+}	t_draw_info;
 
 static t_img	*get_wall_texture(t_cub *cub, t_rayhit *hit)
 {
@@ -124,12 +131,6 @@ static void	draw_ceiling(t_cub *cub, int *dst, int draw_start)
 	}
 }
 
-typedef struct s_draw_info
-{
-	int	line_h;
-	int	draw_start;
-	int	draw_end;
-}	t_draw_info;
 
 static void	calculate_line_height(t_cub *cub, t_rayhit *hit,
 		t_draw_info *info)
