@@ -58,8 +58,8 @@ static int render_frame(t_cub *cub)
 	elapsed_us = current_us - cub->last_frame_time;
 	
 	// 10ms = 10000 microseconds kontrolü
-	if (elapsed_us < 10000)
-		return (0);
+	//if (elapsed_us < 10000)
+	//	return (0);
 	
 	cub->last_frame_time = current_us;
 	handle_input(cub);
