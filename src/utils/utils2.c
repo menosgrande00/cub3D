@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 19:01:34 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 19:01:56 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
-int is_line_blank(char *s)
+int	is_line_blank(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s)
@@ -18,7 +30,8 @@ int is_line_blank(char *s)
 
 void	trim_newline(char *s)
 {
-	int len;
+	int	len;
+
 	if (!s)
 		return ;
 	len = ft_strlen(s);

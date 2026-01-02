@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_chars.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 18:59:39 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 19:00:23 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static void	set_player_dir(t_player *p, char c)
@@ -35,7 +47,7 @@ static void	set_player_dir(t_player *p, char c)
 static int	is_allowed_char(char c)
 {
 	if (c == '0' || c == '1' || c == ' ' || c == 'N'
-				|| c == 'S' || c == 'E' || c == 'W')
+		|| c == 'S' || c == 'E' || c == 'W')
 		return (1);
 	return (0);
 }
@@ -52,7 +64,7 @@ int	validate_chars_and_player(t_map *map, t_player *player)
 	while (++y < map->h)
 	{
 		x = -1;
-		while(++x < (int)ft_strlen(map->grid[y]))
+		while (++x < (int)ft_strlen(map->grid[y]))
 		{
 			c = map->grid[y][x];
 			if (!is_allowed_char(c))
@@ -72,7 +84,7 @@ int	validate_chars_and_player(t_map *map, t_player *player)
 				player->pos.y = (double)y + 0.5;
 				set_player_dir(player, c);
 				player->move_speed = 0.03;
-				player->rot_speed  = 0.02;
+				player->rot_speed = 0.02;
 				map->grid[y][x] = '0';
 			}
 		}

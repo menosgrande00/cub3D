@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 18:57:02 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 18:57:03 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static int	check_after_map(int fd)
@@ -21,8 +33,7 @@ static int	check_after_map(int fd)
 	return (0);
 }
 
-
-static void	norm_to_grid(char **lines, int h, t_map *map)
+static	void	norm_to_grid(char **lines, int h, t_map *map)
 {
 	int		i;
 	int		wmax;
@@ -50,7 +61,7 @@ static void	norm_to_grid(char **lines, int h, t_map *map)
 	}
 }
 
-int set_map_parse(t_cub *cub, int fd)
+int	set_map_parse(t_cub *cub, int fd)
 {
 	char	**lines;
 	int		h;
@@ -62,7 +73,7 @@ int set_map_parse(t_cub *cub, int fd)
 	norm_to_grid(lines, h, &cub->map);
 	free_double(lines);
 	if (validate_chars_and_player(&cub->map, &cub->player)
-			|| check_closed_by_walls(&cub->map) || check_after_map(fd))
+		|| check_closed_by_walls(&cub->map) || check_after_map(fd))
 	{
 		//free_map(&cub->map);
 		return (1);

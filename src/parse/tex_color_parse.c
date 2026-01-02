@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tex_color_parse.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 18:59:05 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 18:59:23 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
-int is_writed_two_times(char **split, t_cfg *cfg)
+int	is_writed_two_times(char **split, t_cfg *cfg)
 {
 	if (!ft_strcmp(split[0], "NO") && cfg->no)
 		return (1);
@@ -47,7 +59,7 @@ void	set_color(t_cfg *cfg, char *first, char **colors, int i)
 		cfg->ceil.b = ft_atoi(colors[2]);
 }
 
-int		check_tex_color_value(t_cfg *cfg)
+int	check_tex_color_value(t_cfg *cfg)
 {
 	if (!in_range(cfg->floor.r) || !in_range(cfg->floor.g)
 		|| !in_range(cfg->floor.b) || !in_range(cfg->ceil.r)
@@ -65,7 +77,7 @@ int		check_tex_color_value(t_cfg *cfg)
 	return (0);
 }
 
-int		check_color_and_set(t_cfg *cfg, char **s)
+int	check_color_and_set(t_cfg *cfg, char **s)
 {
 	char	**colors;
 	int		i;
@@ -77,15 +89,15 @@ int		check_color_and_set(t_cfg *cfg, char **s)
 	{
 		ft_error("Wrong color value number. It need to be 3!");
 		free_double(colors);
-		return(1);
+		return (1);
 	}
 	while (colors[++i])
 	{
 		colors[i] = ft_strtrim(colors[i], " ");
 		j = -1;
-		while(colors[i][++j])
+		while (colors[i][++j])
 		{
-			if(!ft_isdigit(colors[i][j]))
+			if (!ft_isdigit(colors[i][j]))
 			{
 				free_double(colors);
 				ft_error("Color values just can take a number.");
@@ -98,9 +110,9 @@ int		check_color_and_set(t_cfg *cfg, char **s)
 	return (0);
 }
 
-int		check_texture_and_set(t_cfg *cfg, char **s)
+int	check_texture_and_set(t_cfg *cfg, char **s)
 {
-	int fd;
+	int	fd;
 
 	fd = 0;
 	if (s[0][0] == 'N')
@@ -122,7 +134,7 @@ int		check_texture_and_set(t_cfg *cfg, char **s)
 	return (0);
 }
 
-int		check_line(t_cfg *cfg, char *line)
+int	check_line(t_cfg *cfg, char *line)
 {
 	char	**split;
 	int		ret;
@@ -155,7 +167,7 @@ int		check_line(t_cfg *cfg, char *line)
 	return (0);
 }
 
-int		set_tex_color_lines(t_cfg *cfg, int	fd)
+int	set_tex_color_lines(t_cfg *cfg, int	fd)
 {
 	int		i;
 	char	*line;
@@ -166,7 +178,7 @@ int		set_tex_color_lines(t_cfg *cfg, int	fd)
 		ft_error("Cub file couldn't open");
 		return (1);
 	}
-	while(i <= 5)
+	while (i <= 5)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)

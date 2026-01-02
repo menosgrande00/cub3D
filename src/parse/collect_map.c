@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   collect_map.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 18:54:15 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 18:55:26 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static void	line_alloc(char ***s, int n, int *capacity)
@@ -32,20 +44,20 @@ static void	map_start(int fd, char ***lines, int *h, char *str)
 	s = NULL;
 	capacity = 0;
 	n = 0;
-	while(1)
+	while (1)
 	{
 		trim_newline(str);
 		if (is_line_blank(str))
 		{
 			free(str);
-			break;
+			break ;
 		}
 		line_alloc(&s, n, &capacity);
 		s[n++] = str;
 		s[n] = NULL;
 		str = get_next_line(fd);
 		if (str == NULL)
-			break;
+			break ;
 	}
 	*lines = s;
 	*h = n;
@@ -60,7 +72,7 @@ int	collect_map_lines(int fd, char ***lines, int *h)
 	while (str)
 	{
 		if (!is_line_blank(str))
-			break;
+			break ;
 		free(str);
 		str = get_next_line(fd);
 	}

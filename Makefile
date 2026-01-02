@@ -36,9 +36,10 @@ SRCS =	$(SRC_DIR)/main.c \
         $(PARSE_DIR)/map_parse.c \
         $(PARSE_DIR)/tex_color_parse.c \
         $(PARSE_DIR)/validate_chars.c \
-        $(RENDER_DIR)check_struct.c \
         $(RENDER_DIR)mlx_init.c \
         $(RENDER_DIR)ray_cast.c \
+        $(RENDER_DIR)ray_dda.c \
+        $(RENDER_DIR)ray_draw.c \
         $(RENDER_DIR)key_hooks.c \
         $(RENDER_DIR)game_loop.c \
 		$(RENDER_DIR)rotate_camera.c \

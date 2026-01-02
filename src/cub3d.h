@@ -119,6 +119,13 @@ typedef struct	s_rayhit	// Ray casting çarpma bilgisi
 	t_v2	delta_dist;		// Delta mesafe vektörü
 }	t_rayhit;
 
+typedef struct s_draw_info
+{
+	int	line_h;
+	int	draw_start;
+	int	draw_end;
+}	t_draw_info;
+
 typedef struct	s_cub		// Ana program yapısı
 {
 	void		*mlx;		// MLX instance pointer
@@ -138,6 +145,8 @@ typedef struct	s_cub		// Ana program yapısı
 	t_player	player;		// Oyuncu bilgileri
 	t_keys		keys;		// Tuş durumları
 	t_cfg		cfg;		// Config dosyasından okunan bilgiler
+	t_rayhit	hit;		// Current ray hit info
+	t_draw_info	draw;		// Current draw info
 }	t_cub;
 
 int		ft_strcmp(char *s1, char *s2);
@@ -161,4 +170,8 @@ void	handle_input(t_cub *cub);
 void	move_forward_back(t_cub *cub);
 void	move_strafe(t_cub *cub);
 void	rotate_camera(t_cub *cub);
+void	perform_dda(t_cub *cub);
+void	draw_ceiling(t_cub *cub, int *dst);
+void	draw_floor(t_cub *cub, int *dst);
+void	draw_wall(t_cub *cub, int *dst);
 #endif

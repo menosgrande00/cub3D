@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/02 18:55:47 by sesimsek          #+#    #+#             */
+/*   Updated: 2026/01/02 18:55:48 by sesimsek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static char	**two_expanded_grid(t_map *map)
@@ -78,7 +90,7 @@ static int	bfs_check(t_f *f, char **g, char **v, int i)
 
 static int	bfs(t_map *map, char **g, char **v)
 {
-	t_f *f;
+	t_f	*f;
 	int	i;
 
 	f = &map->f;
