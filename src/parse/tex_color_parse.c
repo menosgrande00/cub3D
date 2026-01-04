@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:05 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 18:59:23 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:56:07 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	check_tex_color_value(t_cfg *cfg)
 int	check_color_and_set(t_cfg *cfg, char **s)
 {
 	char	**colors;
+	char	*trimmed;
 	int		i;
 	int		j;
 
@@ -93,7 +94,9 @@ int	check_color_and_set(t_cfg *cfg, char **s)
 	}
 	while (colors[++i])
 	{
-		colors[i] = ft_strtrim(colors[i], " ");
+		trimmed = ft_strtrim(colors[i], " ");
+		free(colors[i]);
+		colors[i] = trimmed;
 		j = -1;
 		while (colors[i][++j])
 		{
@@ -184,7 +187,10 @@ int	set_tex_color_lines(t_cfg *cfg, int	fd)
 		if (line == NULL)
 			return (1);
 		else if (line[0] == '\n')
+		{
+			free(line);
 			continue ;
+		}
 		if (check_line(cfg, line))
 		{
 			free(line);

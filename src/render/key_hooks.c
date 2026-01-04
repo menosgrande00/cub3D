@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:02:10 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/24 21:12:34 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:51:43 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	close_window(t_cub *cub)
 {
-	(void)cub;
-	exit(0);
+	free_cub(cub);
 	return (0);
 }
 

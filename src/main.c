@@ -2,8 +2,9 @@
 
 static void	init_cub(t_cub *cub)
 {
-	cub->screen_w = 3480;
-	cub->screen_h = 2160;
+	ft_memset(cub, 0, sizeof(t_cub));
+	cub->screen_w = 1920;
+	cub->screen_h = 1080;
 	cub->cfg.no = NULL;
 	cub->cfg.so = NULL;
 	cub->cfg.we = NULL;

@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:57:02 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 18:57:03 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:56:05 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static	void	norm_to_grid(char **lines, int h, t_map *map)
 		if (len > wmax)
 			wmax = len;
 	}
-	map->grid = malloc(sizeof(char *) * h);
+	map->grid = malloc(sizeof(char *) * (h + 1));
+	map->grid[h] = NULL;
 	map->w = wmax;
 	map->h = h;
 	i = -1;

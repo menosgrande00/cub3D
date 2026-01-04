@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:13:29 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 19:10:22 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/04 21:01:30 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ static	void	set_texture_pixel(t_cub *cub)
 			cub->cfg.we, &cub->tex.we.w, &cub->tex.we.h);
 	cub->tex.ea.img = mlx_xpm_file_to_image(cub->mlx,
 			cub->cfg.ea, &cub->tex.ea.w, &cub->tex.ea.h);
+	if (!cub->tex.no.img || !cub->tex.so.img
+		|| !cub->tex.we.img || !cub->tex.ea.img)
+	{
+		ft_error("Error loading texture files (XPM format may be corrupted)");
+		free_cub(cub);
+	}
 	cub->tex.no.addr = mlx_get_data_addr(cub->tex.no.img,
 			&cub->tex.no.bpp, &cub->tex.no.line_len, &cub->tex.no.end);
 	cub->tex.so.addr = mlx_get_data_addr(cub->tex.so.img,
@@ -53,15 +59,11 @@ void	create_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
-	{
-		exit(1);
-	}
+		free_cub(cub);
+	set_texture_pixel(cub);
 	cub->win = mlx_new_window(cub->mlx, cub->screen_w, cub->screen_h, "cub3D");
 	if (!cub->win)
-	{
-		exit(1);
-	}
-	set_texture_pixel(cub);
+		free_cub(cub);
 	set_frame_buffer(cub);
 	cub->ceil_color_int = (cub->cfg.ceil.r << 16) | (cub->cfg.ceil.g << 8)
 		| cub->cfg.ceil.b;

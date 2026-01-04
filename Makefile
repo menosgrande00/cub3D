@@ -31,6 +31,7 @@ OBJ_DIR = objects/
 SRCS =	$(SRC_DIR)/main.c \
         $(UTILS_DIR)/utils.c \
         $(UTILS_DIR)/utils2.c \
+		$(UTILS_DIR)/free.c \
         $(PARSE_DIR)/collect_map.c \
         $(PARSE_DIR)/flood_fill.c \
         $(PARSE_DIR)/map_parse.c \
