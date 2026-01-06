@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 20:38:59 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 16:30:58 by oonal            ###   ########.fr       */
+/*   Updated: 2026/01/06 20:38:35 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void free_cub(t_cub *cub)
+static	void	free_cfg(t_cub *cub)
+{
+	if (cub->cfg.no)
+		free(cub->cfg.no);
+	if (cub->cfg.so)
+		free(cub->cfg.so);
+	if (cub->cfg.we)
+		free(cub->cfg.we);
+	if (cub->cfg.ea)
+		free(cub->cfg.ea);
+}
+
+void	free_cub(t_cub *cub)
 {
 	if (!cub)
 		return ;
@@ -33,14 +45,7 @@ void free_cub(t_cub *cub)
 		mlx_destroy_display(cub->mlx);
 		free(cub->mlx);
 	}
-	if (cub->cfg.no)
-		free(cub->cfg.no);
-	if (cub->cfg.so)
-		free(cub->cfg.so);
-	if (cub->cfg.we)
-		free(cub->cfg.we);
-	if (cub->cfg.ea)
-		free(cub->cfg.ea);
+	free_cfg(cub);
 	if (cub->cfg.map_lines)
 		free_double(cub->cfg.map_lines);
 	if (cub->map.grid)

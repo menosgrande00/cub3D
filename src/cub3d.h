@@ -171,7 +171,6 @@ void	move_strafe(t_cub *cub);
 void	rotate_camera(t_cub *cub);
 void	perform_dda(t_cub *cub);
 void	draw_ceiling(t_cub *cub, int *dst);
-void	draw_floor(t_cub *cub, int *dst);
 void	draw_wall(t_cub *cub, int *dst);
 void	free_cub(t_cub *cub);
 #endif

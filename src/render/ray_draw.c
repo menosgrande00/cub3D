@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 00:00:00 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 19:10:25 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/06 20:53:49 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,12 @@ void	draw_ceiling(t_cub *cub, int *dst)
 	}
 }
 
-void	draw_floor(t_cub *cub, int *dst)
+static void	draw_wall_column(t_cub *cub, int *dst, char *tex_data, t_img *tex)
 {
-	int	y;
-
-	y = cub->draw.draw_end;
-	while (y + 3 < cub->screen_h)
-	{
-		dst[0] = cub->floor_color_int;
-		dst[cub->pixel_stride] = cub->floor_color_int;
-		dst[cub->pixel_stride * 2] = cub->floor_color_int;
-		dst[cub->pixel_stride * 3] = cub->floor_color_int;
-		dst += cub->pixel_stride * 4;
-		y += 4;
-	}
-	while (y < cub->screen_h)
-	{
-		*dst = cub->floor_color_int;
-		dst += cub->pixel_stride;
-		y++;
-	}
-}
-
-void	draw_wall(t_cub *cub, int *dst)
-{
-	t_img	*tex;
-	int		tex_x;
-	char	*tex_data;
 	double	step;
 	double	tex_pos;
 	int		y;
 
-	tex = get_wall_texture(cub);
-	tex_x = get_tex_x(cub, tex);
-	tex_data = tex->addr + tex_x * (tex->bpp / 8);
 	step = tex->h / (double)cub->draw.line_h;
 	tex_pos = (cub->draw.draw_start - cub->screen_h / 2
 			+ cub->draw.line_h / 2) * step;
@@ -109,4 +81,16 @@ void	draw_wall(t_cub *cub, int *dst)
 		tex_pos += step;
 		y++;
 	}
+}
+
+void	draw_wall(t_cub *cub, int *dst)
+{
+	t_img	*tex;
+	int		tex_x;
+	char	*tex_data;
+
+	tex = get_wall_texture(cub);
+	tex_x = get_tex_x(cub, tex);
+	tex_data = tex->addr + tex_x * (tex->bpp / 8);
+	draw_wall_column(cub, dst, tex_data, tex);
 }

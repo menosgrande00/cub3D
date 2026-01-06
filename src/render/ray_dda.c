@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 00:00:00 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 19:10:27 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/06 20:40:22 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static void	init_side_dist(t_cub *cub, t_v2 *side_dist)
 	if (cub->hit.ray_dir.y >= 0)
 		cub->hit.step_y = 1;
 	if (cub->hit.ray_dir.x < 0)
-		side_dist->x = (cub->player.pos.x - cub->hit.map_x) * cub->hit.delta_dist.x;
+		side_dist->x = (cub->player.pos.x - cub->hit.map_x)
+			* cub->hit.delta_dist.x;
 	else
 		side_dist->x = (cub->hit.map_x + 1.0 - cub->player.pos.x)
 			* cub->hit.delta_dist.x;
 	if (cub->hit.ray_dir.y < 0)
-		side_dist->y = (cub->player.pos.y - cub->hit.map_y) * cub->hit.delta_dist.y;
+		side_dist->y = (cub->player.pos.y - cub->hit.map_y)
+			* cub->hit.delta_dist.y;
 	else
 		side_dist->y = (cub->hit.map_y + 1.0 - cub->player.pos.y)
 			* cub->hit.delta_dist.y;
@@ -70,9 +72,11 @@ static void	calculate_wall_dist(t_cub *cub, t_v2 *side_dist)
 static void	calculate_wall_x(t_cub *cub)
 {
 	if (cub->hit.side == SIDE_X)
-		cub->hit.wall_x = cub->player.pos.y + cub->hit.perp_dist * cub->hit.ray_dir.y;
+		cub->hit.wall_x = cub->player.pos.y + cub->hit.perp_dist
+			* cub->hit.ray_dir.y;
 	else
-		cub->hit.wall_x = cub->player.pos.x + cub->hit.perp_dist * cub->hit.ray_dir.x;
+		cub->hit.wall_x = cub->player.pos.x + cub->hit.perp_dist
+			* cub->hit.ray_dir.x;
 	cub->hit.wall_x -= floor(cub->hit.wall_x);
 }
 

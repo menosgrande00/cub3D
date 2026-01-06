@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:22:04 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 19:10:26 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/06 20:55:10 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ static void	calculate_line_height(t_cub *cub)
 	cub->draw.draw_end = cub->draw.line_h / 2 + cub->screen_h / 2;
 	if (cub->draw.draw_end >= cub->screen_h)
 		cub->draw.draw_end = cub->screen_h - 1;
+}
+
+static	void	draw_floor(t_cub *cub, int *dst)
+{
+	int	y;
+
+	y = cub->draw.draw_end;
+	while (y + 3 < cub->screen_h)
+	{
+		dst[0] = cub->floor_color_int;
+		dst[cub->pixel_stride] = cub->floor_color_int;
+		dst[cub->pixel_stride * 2] = cub->floor_color_int;
+		dst[cub->pixel_stride * 3] = cub->floor_color_int;
+		dst += cub->pixel_stride * 4;
+		y += 4;
+	}
+	while (y < cub->screen_h)
+	{
+		*dst = cub->floor_color_int;
+		dst += cub->pixel_stride;
+		y++;
+	}
 }
 
 static void	draw_wall_stripe(t_cub *cub, int x)
