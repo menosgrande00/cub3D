@@ -17,6 +17,26 @@ static void	init_cub(t_cub *cub)
 	cub->cfg.ceil.b = -1;
 }
 
+static int	check_file_extension(char *filepath)
+{
+	int		len;
+	char	*filename;
+	char	*ext;
+
+	filename = ft_strrchr(filepath, '/');
+	if (filename)
+		filename++;
+	else
+		filename = filepath;
+	len = ft_strlen(filename);
+	if (len < 5)
+		return (1);
+	ext = filename + len - 4;
+	if (ft_strcmp(ext, ".cub") != 0)
+		return (1);
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_cub	cub;
@@ -24,26 +44,22 @@ int main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		if (check_file_extension(argv[1]))
+		{
+			ft_error("Invalid file extension. Use .cub file");
+			return (1);
+		}
 		init_cub(&cub);
 		fd = open(argv[1], O_RDONLY);
 		if (set_tex_color_lines(&cub.cfg, fd) || set_map_parse(&cub, fd))
 		{
-			//free_all(&cub);
+			get_next_line(-1);
+			free_cub(&cub);
 			return (1);
 		}
-		// print_cub(&cub);  // Debug için - gerekirse aç
-		create_cub(&cub);  // Bu fonksiyon mlx_loop çağırdığı için buradan geri dönmez
-
-		//printf("%s\n", cub.cfg.no);
-		//printf("%s\n", cub.cfg.so);
-		//printf("%s\n", cub.cfg.we);
-		//printf("%s\n", cub.cfg.ea);
-
-		//int i = -1;
-		//while (++i < cub.map.h)
-		//	printf("%s\n", cub.map.grid[i]);
+		create_cub(&cub);
 	}
 	else
-		ft_error("Program takes just a 2 arguman!");
+		ft_error("Program takes just a 2 argumans!");
 	return (0);
 }

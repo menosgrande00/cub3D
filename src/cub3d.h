@@ -150,6 +150,7 @@ typedef struct	s_cub		// Ana program yapısı
 }	t_cub;
 
 int		ft_strcmp(char *s1, char *s2);
+int		is_allowed_char(char c);
 void	free_double(char **str);
 int		in_range(int v);
 int		set_tex_color_lines(t_cfg *cfg, int	fd);
@@ -161,8 +162,6 @@ int		collect_map_lines(int fd, char ***lines, int *h);
 int		check_closed_by_walls(t_map *map);
 void	ft_error(char *str);
 
-
-void	print_cub(t_cub *cub);
 void 	create_cub(t_cub *cub);
 void	setup_hooks(t_cub *cub);
 void	raycast(t_cub *cub);

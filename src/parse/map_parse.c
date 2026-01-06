@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:57:02 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/04 20:56:05 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/06 17:17:18 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	set_map_parse(t_cub *cub, int fd)
 	if (validate_chars_and_player(&cub->map, &cub->player)
 		|| check_closed_by_walls(&cub->map) || check_after_map(fd))
 	{
-		//free_map(&cub->map);
 		return (1);
 	}
 	return (0);

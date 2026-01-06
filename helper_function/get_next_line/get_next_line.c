@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omerfarukonal <omerfarukonal@student.42    +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:54:07 by oonal             #+#    #+#             */
-/*   Updated: 2025/11/18 14:28:58 by omerfarukon      ###   ########.fr       */
+/*   Updated: 2026/01/06 16:54:18 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,14 @@ char	*get_next_line(int fd)
 	static char	*perm;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		if (perm)
+		{
+			free(perm);
+			perm = NULL;
+		}
 		return (NULL);
+	}
 	perm = ft_find_n(perm, fd);
 	if (!perm)
 	{
