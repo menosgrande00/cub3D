@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 00:00:00 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 20:40:22 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:41:30 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 static void	init_side_dist(t_cub *cub, t_v2 *side_dist)
 {
-	cub->hit.step_x = -1;
-	if (cub->hit.ray_dir.x >= 0)
-		cub->hit.step_x = 1;
-	cub->hit.step_y = -1;
-	if (cub->hit.ray_dir.y >= 0)
-		cub->hit.step_y = 1;
+	cub->hit.step_x = 1;
 	if (cub->hit.ray_dir.x < 0)
+	{
+		cub->hit.step_x = -1;
 		side_dist->x = (cub->player.pos.x - cub->hit.map_x)
 			* cub->hit.delta_dist.x;
+	}
 	else
 		side_dist->x = (cub->hit.map_x + 1.0 - cub->player.pos.x)
 			* cub->hit.delta_dist.x;
+	cub->hit.step_y = 1;
 	if (cub->hit.ray_dir.y < 0)
+	{
+		cub->hit.step_y = -1;
 		side_dist->y = (cub->player.pos.y - cub->hit.map_y)
 			* cub->hit.delta_dist.y;
+	}
 	else
 		side_dist->y = (cub->hit.map_y + 1.0 - cub->player.pos.y)
 			* cub->hit.delta_dist.y;

@@ -138,6 +138,7 @@ typedef struct	s_cub		// Ana program yapısı
 	int			ceil_color_int;	// Precomputed ceiling color
 	int			floor_color_int;	// Precomputed floor color
 	int			pixel_stride;	// Precomputed frame.line_len / sizeof(int)
+	int			screen_h_half;	// Precomputed screen_h / 2
 	double		screen_w_recip;	// Precomputed 2.0 / screen_w
 	double		cos_rot;	// Cached cos(rot_speed)
 	double		sin_rot;	// Cached sin(rot_speed)

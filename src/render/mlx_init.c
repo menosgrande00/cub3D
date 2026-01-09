@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:13:29 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 19:49:51 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:34:39 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	create_cub(t_cub *cub)
 	cub->floor_color_int = (cub->cfg.floor.r << 16) | (cub->cfg.floor.g << 8)
 		| cub->cfg.floor.b;
 	cub->pixel_stride = cub->frame.line_len / sizeof(int);
+	cub->screen_h_half = cub->screen_h / 2;
 	cub->screen_w_recip = 2.0 / (double)cub->screen_w;
 	cub->cos_rot = cos(cub->player.rot_speed);
 	cub->sin_rot = sin(cub->player.rot_speed);

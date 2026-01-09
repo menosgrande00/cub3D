@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:56:55 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/30 20:03:12 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:03:46 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static void	apply_movement(t_cub *cub, double new_x, double new_y)
 {
-	if ((int)new_x >= 0 && (int)new_x < cub->map.w
-		&& cub->map.grid[(int)cub->player.pos.y][(int)new_x] != '1')
+	int	ix;
+	int	iy;
+
+	ix = (int)new_x;
+	iy = (int)new_y;
+	if (ix >= 0 && ix < cub->map.w
+		&& cub->map.grid[(int)cub->player.pos.y][ix] != '1')
 		cub->player.pos.x = new_x;
-	if ((int)new_y >= 0 && (int)new_y < cub->map.h
-		&& cub->map.grid[(int)new_y][(int)cub->player.pos.x] != '1')
+	if (iy >= 0 && iy < cub->map.h
+		&& cub->map.grid[iy][(int)cub->player.pos.x] != '1')
 		cub->player.pos.y = new_y;
 }
 

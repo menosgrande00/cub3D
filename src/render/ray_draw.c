@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 00:00:00 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 20:53:49 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:03:59 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static void	draw_wall_column(t_cub *cub, int *dst, char *tex_data, t_img *tex)
 	int		y;
 
 	step = tex->h / (double)cub->draw.line_h;
-	tex_pos = (cub->draw.draw_start - cub->screen_h / 2
-			+ cub->draw.line_h / 2) * step;
+	tex_pos = (cub->draw.draw_start - cub->screen_h_half
+			+ (cub->draw.line_h >> 1)) * step;
 	y = cub->draw.draw_start;
 	while (y < cub->draw.draw_end)
 	{

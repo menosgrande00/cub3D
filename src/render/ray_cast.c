@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:22:04 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 20:55:10 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:03:55 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 static void	calculate_line_height(t_cub *cub)
 {
 	double	inv_dist;
+	int		half_line_h;
 
 	inv_dist = 1.0 / cub->hit.perp_dist;
 	cub->draw.line_h = (int)(cub->screen_h * inv_dist);
-	cub->draw.draw_start = -cub->draw.line_h / 2 + cub->screen_h / 2;
+	half_line_h = cub->draw.line_h >> 1;
+	cub->draw.draw_start = -half_line_h + cub->screen_h_half;
 	if (cub->draw.draw_start < 0)
 		cub->draw.draw_start = 0;
-	cub->draw.draw_end = cub->draw.line_h / 2 + cub->screen_h / 2;
+	cub->draw.draw_end = half_line_h + cub->screen_h_half;
 	if (cub->draw.draw_end >= cub->screen_h)
 		cub->draw.draw_end = cub->screen_h - 1;
 }
@@ -65,18 +67,22 @@ static void	draw_wall_stripe(t_cub *cub, int x)
 static void	init_ray(t_cub *cub, int x)
 {
 	double	camera_x;
+	double	abs_x;
+	double	abs_y;
 
 	camera_x = x * cub->screen_w_recip - 1.0;
 	cub->hit.ray_dir.x = cub->player.dir.x + cub->player.plane.x * camera_x;
 	cub->hit.ray_dir.y = cub->player.dir.y + cub->player.plane.y * camera_x;
-	if (cub->hit.ray_dir.x == 0)
+	abs_x = fabs(cub->hit.ray_dir.x);
+	abs_y = fabs(cub->hit.ray_dir.y);
+	if (abs_x < 1e-10)
 		cub->hit.delta_dist.x = 1e30;
 	else
-		cub->hit.delta_dist.x = fabs(1 / cub->hit.ray_dir.x);
-	if (cub->hit.ray_dir.y == 0)
+		cub->hit.delta_dist.x = 1.0 / abs_x;
+	if (abs_y < 1e-10)
 		cub->hit.delta_dist.y = 1e30;
 	else
-		cub->hit.delta_dist.y = fabs(1 / cub->hit.ray_dir.y);
+		cub->hit.delta_dist.y = 1.0 / abs_y;
 }
 
 void	raycast(t_cub *cub)
