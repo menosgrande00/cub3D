@@ -6,15 +6,12 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:55:27 by sesimsek          #+#    #+#             */
-/*   Updated: 2025/12/29 17:36:02 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/09 19:47:52 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-// Kamera rotasyonu (sağ/sol ok tuşları)
-// Sağ ok tuşu - Sağa dön // Right arrow
-// Sol ok tuşu - Sola dön // Left arrow
 static	void	rotate_camera_right(t_cub *cub, double old_dir_x,
 	double old_plane_x)
 {
