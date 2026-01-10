@@ -3,95 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   tex_color_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:05 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/04 20:56:07 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/10 15:56:49 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	is_writed_two_times(char **split, t_cfg *cfg)
+static int	process_color_values(t_cfg *cfg, char **colors, char *type)
 {
-	if (!ft_strcmp(split[0], "NO") && cfg->no)
-		return (1);
-	else if (!ft_strcmp(split[0], "SO") && cfg->so)
-		return (1);
-	else if (!ft_strcmp(split[0], "WE") && cfg->we)
-		return (1);
-	else if (!ft_strcmp(split[0], "EA") && cfg->ea)
-		return (1);
-	return (0);
-}
-
-int	assign_tex(char **split, t_cfg *cfg)
-{
-	if (is_writed_two_times(split, cfg))
-	{
-		ft_error("Texture or color written more than once");
-		return (1);
-	}
-	if (!ft_strcmp(split[0], "NO"))
-		cfg->no = ft_strdup(split[1]);
-	else if (!ft_strcmp(split[0], "SO"))
-		cfg->so = ft_strdup(split[1]);
-	else if (!ft_strcmp(split[0], "WE"))
-		cfg->we = ft_strdup(split[1]);
-	else if (!ft_strcmp(split[0], "EA"))
-		cfg->ea = ft_strdup(split[1]);
-	return (0);
-}
-
-void	set_color(t_cfg *cfg, char *first, char **colors, int i)
-{
-	if (first[0] == 'F' && i == 0)
-		cfg->floor.r = ft_atoi(colors[0]);
-	else if (first[0] == 'F' && i == 1)
-		cfg->floor.g = ft_atoi(colors[1]);
-	else if (first[0] == 'F' && i == 2)
-		cfg->floor.b = ft_atoi(colors[2]);
-	else if (first[0] == 'C' && i == 0)
-		cfg->ceil.r = ft_atoi(colors[0]);
-	else if (first[0] == 'C' && i == 1)
-		cfg->ceil.g = ft_atoi(colors[1]);
-	else if (first[0] == 'C' && i == 2)
-		cfg->ceil.b = ft_atoi(colors[2]);
-}
-
-int	check_tex_color_value(t_cfg *cfg)
-{
-	if (!in_range(cfg->floor.r) || !in_range(cfg->floor.g)
-		|| !in_range(cfg->floor.b) || !in_range(cfg->ceil.r)
-		|| !in_range(cfg->ceil.g) || !in_range(cfg->ceil.b))
-	{
-		ft_error("RGB colors have to between 0 to 255!");
-		return (1);
-	}
-	if (!cfg->no || !cfg->so || !cfg->we || !cfg->ea)
-	{
-		printf("----%d\n", cfg->ceil.b);
-		ft_error("Missing data\n");
-		return (1);
-	}
-	return (0);
-}
-
-int	check_color_and_set(t_cfg *cfg, char **s)
-{
-	char	**colors;
-	char	*trimmed;
 	int		i;
 	int		j;
+	char	*trimmed;
 
 	i = -1;
-	colors = ft_split(s[1], ',');
-	if (!colors[2] || colors[3] != NULL)
-	{
-		ft_error("Wrong color value number. It need to be 3!");
-		free_double(colors);
-		return (1);
-	}
 	while (colors[++i])
 	{
 		trimmed = ft_strtrim(colors[i], " ");
@@ -102,38 +29,32 @@ int	check_color_and_set(t_cfg *cfg, char **s)
 		{
 			if (!ft_isdigit(colors[i][j]))
 			{
-				free_double(colors);
 				ft_error("Color values just can take a number.");
 				return (1);
 			}
 		}
-		set_color(cfg, s[0], colors, i);
+		set_color(cfg, type, colors, i);
 	}
-	free_double(colors);
 	return (0);
 }
 
-int	check_texture_and_set(t_cfg *cfg, char **s)
+int	check_color_and_set(t_cfg *cfg, char **s)
 {
-	int	fd;
+	char	**colors;
 
-	fd = 0;
-	if (s[0][0] == 'N')
-		fd = open(s[1], O_RDONLY);
-	else if (s[0][0] == 'S')
-		fd = open(s[1], O_RDONLY);
-	else if (s[0][0] == 'W')
-		fd = open(s[1], O_RDONLY);
-	else if (s[0][0] == 'E')
-		fd = open(s[1], O_RDONLY);
-	if (fd < 0)
+	colors = ft_split(s[1], ',');
+	if (!colors[2] || colors[3] != NULL)
 	{
-		ft_error("Texture File Error");
+		ft_error("Wrong color value number. It need to be 3!");
+		free_double(colors);
 		return (1);
 	}
-	close(fd);
-	if (assign_tex(s, cfg))
+	if (process_color_values(cfg, colors, s[0]))
+	{
+		free_double(colors);
 		return (1);
+	}
+	free_double(colors);
 	return (0);
 }
 
@@ -142,6 +63,7 @@ int	check_line(t_cfg *cfg, char *line)
 	char	**split;
 	int		ret;
 
+	ret = 0;
 	line[ft_strlen(line) - 1] = '\0';
 	split = ft_split(line, ' ');
 	if (split[2])
@@ -161,26 +83,16 @@ int	check_line(t_cfg *cfg, char *line)
 		ft_error("Texture, Floor or Ceil name is wrong!");
 		return (1);
 	}
-	if (ret)
-	{
-		free_double(split);
-		return (1);
-	}
 	free_double(split);
-	return (0);
+	return (ret);
 }
 
-int	set_tex_color_lines(t_cfg *cfg, int	fd)
+static int	read_loop(t_cfg *cfg, int fd)
 {
 	int		i;
 	char	*line;
 
 	i = 0;
-	if (fd < 0)
-	{
-		ft_error("Cub file couldn't open");
-		return (1);
-	}
 	while (i <= 5)
 	{
 		line = get_next_line(fd);
@@ -199,6 +111,18 @@ int	set_tex_color_lines(t_cfg *cfg, int	fd)
 		i++;
 		free(line);
 	}
+	return (0);
+}
+
+int	set_tex_color_lines(t_cfg *cfg, int fd)
+{
+	if (fd < 0)
+	{
+		ft_error("Cub file couldn't open");
+		return (1);
+	}
+	if (read_loop(cfg, fd))
+		return (1);
 	if (check_tex_color_value(cfg))
 		return (1);
 	return (0);

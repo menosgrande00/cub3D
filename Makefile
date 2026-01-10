@@ -36,6 +36,7 @@ SRCS =	$(SRC_DIR)/main.c \
         $(PARSE_DIR)/flood_fill.c \
         $(PARSE_DIR)/map_parse.c \
         $(PARSE_DIR)/tex_color_parse.c \
+		$(PARSE_DIR)/parse_utils.c \
         $(PARSE_DIR)/validate_chars.c \
         $(RENDER_DIR)mlx_init.c \
         $(RENDER_DIR)ray_cast.c \

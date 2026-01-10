@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:39 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 17:27:04 by oonal            ###   ########.fr       */
+/*   Updated: 2026/01/10 16:12:20 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ static void	init_player_params(t_map *map, t_player *player, int x, int y)
 	map->grid[y][x] = '0';
 }
 
-static int	check_map_char(t_map *map, t_player *player, int x, int y, int *seen)
+static int	check_map_char(t_map *map, t_player *p, int *pos, int *seen)
 {
 	char	c;
 
-	c = map->grid[y][x];
+	c = map->grid[pos[1]][pos[0]];
 	if (!is_allowed_char(c))
 	{
 		ft_error("Map include not allowed character");
@@ -78,25 +78,24 @@ static int	check_map_char(t_map *map, t_player *player, int x, int y, int *seen)
 			return (1);
 		}
 		*seen = 1;
-		init_player_params(map, player, x, y);
+		init_player_params(map, p, pos[0], pos[1]);
 	}
 	return (0);
 }
 
 int	validate_chars_and_player(t_map *map, t_player *player)
 {
-	int	x;
-	int	y;
+	int	pos[2];
 	int	seen;
 
-	y = -1;
+	pos[1] = -1;
 	seen = 0;
-	while (++y < map->h)
+	while (++pos[1] < map->h)
 	{
-		x = -1;
-		while (++x < (int)ft_strlen(map->grid[y]))
+		pos[0] = -1;
+		while (++pos[0] < (int)ft_strlen(map->grid[pos[1]]))
 		{
-			if (check_map_char(map, player, x, y, &seen))
+			if (check_map_char(map, player, pos, &seen))
 				return (1);
 		}
 	}
