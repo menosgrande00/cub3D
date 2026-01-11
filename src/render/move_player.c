@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:56:55 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 20:03:46 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:47:47 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,19 @@ void	move_forward_back(t_cub *cub)
 {
 	double	new_x;
 	double	new_y;
+	double	speed;
 
+	speed = cub->player.move_speed * cub->delta_time;
 	if (cub->keys.held[119])
 	{
-		new_x = cub->player.pos.x + cub->player.dir.x * cub->player.move_speed;
-		new_y = cub->player.pos.y + cub->player.dir.y * cub->player.move_speed;
+		new_x = cub->player.pos.x + cub->player.dir.x * speed;
+		new_y = cub->player.pos.y + cub->player.dir.y * speed;
 		apply_movement(cub, new_x, new_y);
 	}
 	if (cub->keys.held[115])
 	{
-		new_x = cub->player.pos.x - cub->player.dir.x * cub->player.move_speed;
-		new_y = cub->player.pos.y - cub->player.dir.y * cub->player.move_speed;
+		new_x = cub->player.pos.x - cub->player.dir.x * speed;
+		new_y = cub->player.pos.y - cub->player.dir.y * speed;
 		apply_movement(cub, new_x, new_y);
 	}
 }
@@ -50,21 +52,19 @@ void	move_strafe(t_cub *cub)
 {
 	double	new_x;
 	double	new_y;
+	double	speed;
 
+	speed = cub->player.move_speed * cub->delta_time;
 	if (cub->keys.held[100])
 	{
-		new_x = cub->player.pos.x + cub->player.plane.x
-			* cub->player.move_speed;
-		new_y = cub->player.pos.y + cub->player.plane.y
-			* cub->player.move_speed;
+		new_x = cub->player.pos.x + cub->player.plane.x * speed;
+		new_y = cub->player.pos.y + cub->player.plane.y * speed;
 		apply_movement(cub, new_x, new_y);
 	}
 	if (cub->keys.held[97])
 	{
-		new_x = cub->player.pos.x - cub->player.plane.x
-			* cub->player.move_speed;
-		new_y = cub->player.pos.y - cub->player.plane.y
-			* cub->player.move_speed;
+		new_x = cub->player.pos.x - cub->player.plane.x * speed;
+		new_y = cub->player.pos.y - cub->player.plane.y * speed;
 		apply_movement(cub, new_x, new_y);
 	}
 }

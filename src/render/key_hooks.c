@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:02:10 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 19:55:15 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:47:47 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static	void	speed(t_cub *cub, double move_speed, double rot_speed)
 {
 	cub->player.move_speed = move_speed;
 	cub->player.rot_speed = rot_speed;
-	cub->cos_rot = cos(cub->player.rot_speed);
-	cub->sin_rot = sin(cub->player.rot_speed);
+	cub->cos_rot = cos(cub->player.rot_speed * cub->delta_time);
+	cub->sin_rot = sin(cub->player.rot_speed * cub->delta_time);
 }
 
 int	key_press(int keycode, t_cub *cub)
@@ -31,13 +31,13 @@ int	key_press(int keycode, t_cub *cub)
 	if (keycode == 65307)
 		close_window(cub);
 	if (keycode == 49)
-		speed(cub, 0.03, 0.02);
+		speed(cub, 5.0, 3.0);
 	else if (keycode == 50)
-		speed(cub, 0.05, 0.03);
+		speed(cub, 8.0, 4.5);
 	else if (keycode == 51)
-		speed(cub, 0.08, 0.05);
+		speed(cub, 12.0, 6.0);
 	else if (keycode == 52)
-		speed(cub, 0.12, 0.08);
+		speed(cub, 18.0, 9.0);
 	if (keycode < KEY_MAX)
 		cub->keys.held[keycode] = 1;
 	return (0);

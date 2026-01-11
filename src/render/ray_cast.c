@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:22:04 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 20:03:55 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:47:47 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	calculate_line_height(t_cub *cub)
 	int		half_line_h;
 
 	inv_dist = 1.0 / cub->hit.perp_dist;
-	cub->draw.line_h = (int)(cub->screen_h * inv_dist);
+	cub->draw.line_h = (int)(cub->render_h * inv_dist);
 	half_line_h = cub->draw.line_h >> 1;
 	cub->draw.draw_start = -half_line_h + cub->screen_h_half;
 	if (cub->draw.draw_start < 0)
 		cub->draw.draw_start = 0;
 	cub->draw.draw_end = half_line_h + cub->screen_h_half;
-	if (cub->draw.draw_end >= cub->screen_h)
-		cub->draw.draw_end = cub->screen_h - 1;
+	if (cub->draw.draw_end >= cub->render_h)
+		cub->draw.draw_end = cub->render_h - 1;
 }
 
 static	void	draw_floor(t_cub *cub, int *dst)
@@ -33,7 +33,7 @@ static	void	draw_floor(t_cub *cub, int *dst)
 	int	y;
 
 	y = cub->draw.draw_end;
-	while (y + 3 < cub->screen_h)
+	while (y + 3 < cub->render_h)
 	{
 		dst[0] = cub->floor_color_int;
 		dst[cub->pixel_stride] = cub->floor_color_int;
@@ -42,7 +42,7 @@ static	void	draw_floor(t_cub *cub, int *dst)
 		dst += cub->pixel_stride * 4;
 		y += 4;
 	}
-	while (y < cub->screen_h)
+	while (y < cub->render_h)
 	{
 		*dst = cub->floor_color_int;
 		dst += cub->pixel_stride;
@@ -90,7 +90,7 @@ void	raycast(t_cub *cub)
 	int	x;
 
 	x = 0;
-	while (x < cub->screen_w)
+	while (x < cub->render_w)
 	{
 		init_ray(cub, x);
 		cub->hit.map_x = (int)cub->player.pos.x;

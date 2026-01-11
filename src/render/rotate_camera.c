@@ -6,7 +6,7 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:55:27 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 19:47:52 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:47:47 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static	void	rotate_camera_left(t_cub *cub, double old_dir_x,
 
 void	rotate_camera(t_cub *cub)
 {
+	cub->cos_rot = cos(cub->player.rot_speed * cub->delta_time);
+	cub->sin_rot = sin(cub->player.rot_speed * cub->delta_time);
 	if (cub->keys.held[65363])
 		rotate_camera_right(cub, 0, 0);
 	if (cub->keys.held[65361])
