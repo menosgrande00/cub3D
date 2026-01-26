@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:03:09 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/10 16:07:26 by oonal            ###   ########.fr       */
+/*   Updated: 2026/01/26 21:26:59 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	init_cub(t_cub *cub)
 {
 	ft_memset(cub, 0, sizeof(t_cub));
-	cub->screen_w = 1920;
-	cub->screen_h = 1080;
+	cub->screen_w = 3840;
+	cub->screen_h = 2160;
 	cub->cfg.no = NULL;
 	cub->cfg.so = NULL;
 	cub->cfg.we = NULL;

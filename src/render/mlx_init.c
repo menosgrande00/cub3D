@@ -6,11 +6,19 @@
 /*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:13:29 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/09 20:34:39 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/26 21:49:47 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+static	double	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec + tv.tv_usec / 1000000.0);
+}
 
 static	void	set_texture_pixel(t_cub *cub)
 {
@@ -49,6 +57,24 @@ static	void	set_frame_buffer(t_cub *cub)
 
 static	int	render_frame(t_cub *cub)
 {
+	double			current_time;
+	static int		frame_count;
+	static double	last_print;
+
+	frame_count = 0;
+	last_print = 0;
+	current_time = get_time();
+	cub->delta_time = current_time - cub->last_time;
+	if (cub->delta_time > 0.1)
+		cub->delta_time = 0.1;
+	cub->last_time = current_time;
+	frame_count++;
+	if (current_time - last_print >= 1.0)
+	{
+		printf("FPS: %d\n", frame_count);
+		frame_count = 0;
+		last_print = current_time;
+	}
 	handle_input(cub);
 	raycast(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame.img, 0, 0);
@@ -57,6 +83,7 @@ static	int	render_frame(t_cub *cub)
 
 void	create_cub(t_cub *cub)
 {
+	cub->last_time = get_time();
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		free_cub(cub);
@@ -72,8 +99,9 @@ void	create_cub(t_cub *cub)
 	cub->pixel_stride = cub->frame.line_len / sizeof(int);
 	cub->screen_h_half = cub->screen_h / 2;
 	cub->screen_w_recip = 2.0 / (double)cub->screen_w;
-	cub->cos_rot = cos(cub->player.rot_speed);
-	cub->sin_rot = sin(cub->player.rot_speed);
+	cub->delta_time = 0.016;
+	cub->cos_rot = cos(cub->player.rot_speed * cub->delta_time);
+	cub->sin_rot = sin(cub->player.rot_speed * cub->delta_time);
 	setup_hooks(cub);
 	mlx_loop_hook(cub->mlx, render_frame, cub);
 	mlx_loop(cub->mlx);

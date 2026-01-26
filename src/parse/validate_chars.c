@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_chars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:39 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/10 16:12:20 by oonal            ###   ########.fr       */
+/*   Updated: 2026/01/26 21:47:05 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	init_player_params(t_map *map, t_player *player, int x, int y)
 	player->pos.x = (double)x + 0.5;
 	player->pos.y = (double)y + 0.5;
 	set_player_dir(player, map->grid[y][x]);
-	player->move_speed = 0.03;
-	player->rot_speed = 0.02;
+	player->move_speed = 2.5;
+	player->rot_speed = 1.5;
 	map->grid[y][x] = '0';
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:06:36 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/10 16:09:24 by oonal            ###   ########.fr       */
+/*   Updated: 2026/01/26 21:44:15 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <math.h>
 # include <errno.h>
 # include <string.h>
+# include <stdint.h>
 
 # define KEY_MAX	70000
 # define RD_CHUNK	4096
@@ -45,11 +46,11 @@ typedef struct s_img
 {
 	void	*img;
 	char	*addr;
+	int		w;
+	int		h;
 	int		bpp;
 	int		line_len;
 	int		end;
-	int		w;
-	int		h;
 }	t_img;
 
 typedef struct s_tex
@@ -119,16 +120,16 @@ typedef enum e_side
 
 typedef struct s_rayhit
 {
-	int		hit;
-	t_side	side;
+	t_v2	ray_dir;
+	t_v2	delta_dist;
 	double	perp_dist;
 	double	wall_x;
 	int		map_x;
 	int		map_y;
 	int		step_x;
 	int		step_y;
-	t_v2	ray_dir;
-	t_v2	delta_dist;
+	int		hit;
+	t_side	side;
 }	t_rayhit;
 
 typedef struct s_draw_info
@@ -142,24 +143,28 @@ typedef struct s_cub
 {
 	void		*mlx;
 	void		*win;
-	int			screen_w;
-	int			screen_h;
-	t_img		frame;
-	t_tex		tex;
-	long		last_frame_time;
-	int			ceil_color_int;
-	int			floor_color_int;
-	int			pixel_stride;
-	int			screen_h_half;
-	double		screen_w_recip;
-	double		cos_rot;
-	double		sin_rot;
 	t_map		map;
 	t_player	player;
 	t_keys		keys;
 	t_cfg		cfg;
 	t_rayhit	hit;
 	t_draw_info	draw;
+	t_img		frame;
+	t_tex		tex;
+	double		last_time;
+	double		delta_time;
+	double		fps;
+	double		screen_w_recip;
+	double		cos_rot;
+	double		sin_rot;
+	long		last_frame_time;
+	int			screen_w;
+	int			screen_h;
+	int			ceil_color_int;
+	int			floor_color_int;
+	int			pixel_stride;
+	int			screen_h_half;
+	int			frame_count;
 }	t_cub;
 
 int		ft_strcmp(char *s1, char *s2);
