@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:06:36 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/11 19:47:47 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:09:24 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,7 @@ typedef struct s_cub
 	void		*win;
 	int			screen_w;
 	int			screen_h;
-	int			render_w;
-	int			render_h;
-	int			scale_factor;
 	t_img		frame;
-	t_img		scaled_frame;
 	t_tex		tex;
 	long		last_frame_time;
 	int			ceil_color_int;
@@ -164,10 +160,6 @@ typedef struct s_cub
 	t_cfg		cfg;
 	t_rayhit	hit;
 	t_draw_info	draw;
-	double		last_time;
-	double		delta_time;
-	double		fps;
-	int			frame_count;
 }	t_cub;
 
 int		ft_strcmp(char *s1, char *s2);
