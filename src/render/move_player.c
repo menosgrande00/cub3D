@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:56:55 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/14 15:30:36 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 20:11:37 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-#define MOVEMENT_MARGIN 0.2
 
 static int	validate_move_x(t_cub *cub, double new_x)
 {

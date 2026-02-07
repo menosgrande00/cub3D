@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:06:36 by oonal             #+#    #+#             */
-/*   Updated: 2026/02/07 19:38:10 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 20:11:08 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <stdint.h>
 
 # define KEY_MAX	70000
-# define RD_CHUNK	4096
+# define MOVEMENT_MARGIN 0.2
 
 typedef struct s_v2
 {
@@ -197,5 +197,6 @@ int		check_tex_color_value(t_cfg *cfg);
 int		check_texture_and_set(t_cfg *cfg, char **s);
 int		check_comma_error(char *str);
 int		has_xpm_ext(char *path);
+int		validate_line_type(char **sp);
 
 #endif

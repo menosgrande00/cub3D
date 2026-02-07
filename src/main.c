@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:03:09 by oonal             #+#    #+#             */
-/*   Updated: 2026/02/07 18:43:15 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 20:12:39 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	init_cub(t_cub *cub)
 {
 	ft_memset(cub, 0, sizeof(t_cub));
-	cub->screen_w = 3840;
-	cub->screen_h = 2160;
+	cub->screen_w = 1920;
+	cub->screen_h = 1080;
 	cub->cfg.no = NULL;
 	cub->cfg.so = NULL;
 	cub->cfg.we = NULL;
