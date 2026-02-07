@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:05 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/10 15:56:49 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 19:47:17 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	process_color_values(t_cfg *cfg, char **colors, char *type)
 		{
 			if (!ft_isdigit(colors[i][j]))
 			{
-				ft_error("Color values just can take a number.");
+				ft_error("Color values just can take a number.\n");
 				return (1);
 			}
 		}
@@ -42,10 +42,15 @@ int	check_color_and_set(t_cfg *cfg, char **s)
 {
 	char	**colors;
 
+	if (check_comma_error(s[1]))
+	{
+		ft_error("Invalid color format (check commas)\n");
+		return (1);
+	}
 	colors = ft_split(s[1], ',');
 	if (!colors[2] || colors[3] != NULL)
 	{
-		ft_error("Wrong color value number. It need to be 3!");
+		ft_error("Wrong color value number. It need to be 3!\n");
 		free_double(colors);
 		return (1);
 	}
@@ -60,31 +65,29 @@ int	check_color_and_set(t_cfg *cfg, char **s)
 
 int	check_line(t_cfg *cfg, char *line)
 {
-	char	**split;
+	char	**sp;
+	int		type;
 	int		ret;
 
-	ret = 0;
-	line[ft_strlen(line) - 1] = '\0';
-	split = ft_split(line, ' ');
-	if (split[2])
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	sp = ft_split(line, ' ');
+	type = validate_line_type(sp);
+	if (type == -1)
 	{
-		free_double(split);
-		ft_error("Extra value in line in file");
+		free_double(sp);
+		return (0);
+	}
+	if (type == 2)
+	{
+		free_double(sp);
 		return (1);
 	}
-	if (!ft_strcmp(split[0], "NO") || !ft_strcmp(split[0], "SO")
-		|| !ft_strcmp(split[0], "WE") || !ft_strcmp(split[0], "EA"))
-		ret = check_texture_and_set(cfg, split);
-	else if (!ft_strcmp(split[0], "F") || !ft_strcmp(split[0], "C"))
-		ret = check_color_and_set(cfg, split);
+	if (type == 0)
+		ret = check_texture_and_set(cfg, sp);
 	else
-	{
-		free_double(split);
-		ft_error("Texture, Floor or Ceil name is wrong!");
-		return (1);
-	}
-	free_double(split);
-	return (ret);
+		ret = check_color_and_set(cfg, sp);
+	return (free_double(sp), ret);
 }
 
 static int	read_loop(t_cfg *cfg, int fd)
@@ -118,7 +121,7 @@ int	set_tex_color_lines(t_cfg *cfg, int fd)
 {
 	if (fd < 0)
 	{
-		ft_error("Cub file couldn't open");
+		ft_error("Cub file couldn't open\n");
 		return (1);
 	}
 	if (read_loop(cfg, fd))

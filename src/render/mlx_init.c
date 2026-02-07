@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:13:29 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/26 21:49:47 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:44:24 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	void	set_texture_pixel(t_cub *cub)
 	if (!cub->tex.no.img || !cub->tex.so.img
 		|| !cub->tex.we.img || !cub->tex.ea.img)
 	{
-		ft_error("Error loading texture files (XPM format may be corrupted)");
+		ft_error("Error loading texture files (XPM format may be corrupted)\n");
 		free_cub(cub);
 	}
 	cub->tex.no.addr = mlx_get_data_addr(cub->tex.no.img,

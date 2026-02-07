@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:55:47 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 18:55:48 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:43:25 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	bfs_check(t_f *f, char **g, char **v, int i)
 			continue ;
 		if (g[f->ny][f->nx] == '0')
 		{
-			ft_error("Map is not closed by walls");
+			ft_error("Map is not closed by walls\n");
 			return (1);
 		}
 		if (g[f->ny][f->nx] == ' ')

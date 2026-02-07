@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:01:02 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/10 16:01:05 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 19:37:44 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	assign_tex(char **split, t_cfg *cfg)
 {
 	if (is_writed_two_times(split, cfg))
 	{
-		ft_error("Texture or color written more than once");
+		ft_error("Texture or color written more than once\n");
 		return (1);
 	}
 	if (!ft_strcmp(split[0], "NO"))
@@ -65,7 +65,7 @@ int	check_tex_color_value(t_cfg *cfg)
 		|| !in_range(cfg->floor.b) || !in_range(cfg->ceil.r)
 		|| !in_range(cfg->ceil.g) || !in_range(cfg->ceil.b))
 	{
-		ft_error("RGB colors have to between 0 to 255!");
+		ft_error("RGB colors have to between 0 to 255!\n");
 		return (1);
 	}
 	if (!cfg->no || !cfg->so || !cfg->we || !cfg->ea)
@@ -81,6 +81,11 @@ int	check_texture_and_set(t_cfg *cfg, char **s)
 {
 	int	fd;
 
+	if (!has_xpm_ext(s[1]))
+	{
+		ft_error("Texture file must have .xpm extension\n");
+		return (1);
+	}
 	fd = 0;
 	if (s[0][0] == 'N')
 		fd = open(s[1], O_RDONLY);
@@ -92,7 +97,7 @@ int	check_texture_and_set(t_cfg *cfg, char **s)
 		fd = open(s[1], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_error("Texture File Error");
+		ft_error("Texture File Error\n");
 		return (1);
 	}
 	close(fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:06:36 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/26 21:44:15 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 19:38:10 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,7 @@ int		assign_tex(char **split, t_cfg *cfg);
 void	set_color(t_cfg *cfg, char *first, char **colors, int i);
 int		check_tex_color_value(t_cfg *cfg);
 int		check_texture_and_set(t_cfg *cfg, char **s);
+int		check_comma_error(char *str);
+int		has_xpm_ext(char *path);
 
 #endif

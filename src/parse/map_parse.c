@@ -6,7 +6,7 @@
 /*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:57:02 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 17:17:18 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 18:43:27 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_after_map(int fd)
 		if (line[i] != '\0' && line[i] != '\n')
 		{
 			free(line);
-			ft_error("Map: extra content after map");
+			ft_error("Map: extra content after map\n");
 			return (1);
 		}
 		free(line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:03:09 by oonal             #+#    #+#             */
-/*   Updated: 2026/01/26 21:26:59 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:43:15 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 	{
 		if (check_file_extension(argv[1]))
 		{
-			ft_error("Invalid file extension. Use .cub file");
+			ft_error("Invalid file extension. Use .cub file\n");
 			return (1);
 		}
 		init_cub(&cub);
@@ -72,6 +72,6 @@ int	main(int argc, char **argv)
 		create_cub(&cub);
 	}
 	else
-		ft_error("Program takes just a 2 argumans!");
+		ft_error("Program takes just a 2 argumans!\n");
 	return (0);
 }

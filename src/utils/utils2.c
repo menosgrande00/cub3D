@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:01:34 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/06 20:39:50 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 19:40:01 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,38 @@ int	is_allowed_char(char c)
 		|| c == 'S' || c == 'E' || c == 'W')
 		return (1);
 	return (0);
+}
+
+int	check_comma_error(char *str)
+{
+	int	i;
+	int	comma_count;
+
+	i = 0;
+	comma_count = 0;
+	while (str[i])
+	{
+		if (str[i] == ',')
+		{
+			comma_count++;
+			if (i == 0 || str[i + 1] == ',' || str[i + 1] == '\0')
+				return (1);
+		}
+		i++;
+	}
+	if (comma_count != 2)
+		return (1);
+	return (0);
+}
+
+int	has_xpm_ext(char *path)
+{
+	int	len;
+
+	len = ft_strlen(path);
+	if (len < 4)
+		return (0);
+	if (ft_strcmp(path + len - 4, ".xpm") != 0)
+		return (0);
+	return (1);
 }

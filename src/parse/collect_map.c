@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:54:15 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/02 18:55:26 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:43:22 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	collect_map_lines(int fd, char ***lines, int *h)
 	}
 	if (!str)
 	{
-		ft_error("No map!");
+		ft_error("No map!\n");
 		return (1);
 	}
 	map_start(fd, lines, h, str);

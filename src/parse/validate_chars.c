@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_chars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:59:39 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/01/26 21:47:05 by sesimsek         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:43:58 by oonal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ static int	check_map_char(t_map *map, t_player *p, int *pos, int *seen)
 	c = map->grid[pos[1]][pos[0]];
 	if (!is_allowed_char(c))
 	{
-		ft_error("Map include not allowed character");
+		ft_error("Map include not allowed character\n");
 		return (1);
 	}
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (*seen != 0)
 		{
-			ft_error("Player appears more than once");
+			ft_error("Player appears more than once\n");
 			return (1);
 		}
 		*seen = 1;
@@ -101,7 +101,7 @@ int	validate_chars_and_player(t_map *map, t_player *player)
 	}
 	if (seen == 0)
 	{
-		ft_error("Player not found");
+		ft_error("Player not found\n");
 		return (1);
 	}
 	return (0);
