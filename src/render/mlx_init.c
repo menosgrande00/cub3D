@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oonal <oonal@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sesimsek <sesimsek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:13:29 by sesimsek          #+#    #+#             */
-/*   Updated: 2026/02/07 18:44:24 by oonal            ###   ########.fr       */
+/*   Updated: 2026/02/07 20:03:39 by sesimsek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,12 @@ static	void	set_frame_buffer(t_cub *cub)
 static	int	render_frame(t_cub *cub)
 {
 	double			current_time;
-	static int		frame_count;
-	static double	last_print;
 
-	frame_count = 0;
-	last_print = 0;
 	current_time = get_time();
 	cub->delta_time = current_time - cub->last_time;
 	if (cub->delta_time > 0.1)
 		cub->delta_time = 0.1;
 	cub->last_time = current_time;
-	frame_count++;
-	if (current_time - last_print >= 1.0)
-	{
-		printf("FPS: %d\n", frame_count);
-		frame_count = 0;
-		last_print = current_time;
-	}
 	handle_input(cub);
 	raycast(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame.img, 0, 0);
